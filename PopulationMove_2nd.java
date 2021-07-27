@@ -18,7 +18,11 @@ public class PopulationMove_2nd {
 			int diff = Math.abs(value-map[x][y]);
 			if(diff<L || diff>R) return 0;
 		}
+		
 		//인구이동에 해당.
+		visited[x][y] = 1;
+		cnt++;//한 칸 = 연합국 하나를 의미하기 때문에!
+		
 		int sum = map[x][y];
 		sum += find(x-1,y,map[x][y]);//현재값(인구수)을 재귀호출에 인자로 넘겨주어, 이전 인구값으로써 인구이동 판단!!!
 		sum += find(x+1,y,map[x][y]);
@@ -45,6 +49,12 @@ public class PopulationMove_2nd {
 		boolean flag;
 		do {
 			flag = false;
+			//방문 배열 초기화!
+			for(int i=0;i<N;i++) {
+				for(int j=0;j<N;j++) {
+					visited[i][j] = 0;
+				}
+			}
 			
 			for(int i=0;i<N;i++) {
 				for(int j=0;j<N;j++) {
