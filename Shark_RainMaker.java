@@ -1,9 +1,9 @@
-package ss;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 public class Shark_RainMaker {
 	static int ans,N,M,Map[][];
+	static boolean[][] check;
 	static class Order{
 		int d,s;
 		Order(int d,int s){
@@ -19,10 +19,9 @@ public class Shark_RainMaker {
 		}
 	}
 	static LinkedList<Cloud> cloudList;//초기 구름 정보 저장 컬렉션
-	static int[] cloudX = {0,-1,-1,-1,0,1,1,1};//구름 이동 8개 방향
-	static int[] cloudY = {-1,-1,0,1,1,1,0,-1};
-	static int[] copyWX = {-1,-1,1,1};//물복사 대각선 4개 방향
-	static int[] copyWY = {-1,1,-1,1};
+	static int[] dx = {0,-1,-1,-1,0,1,1,1};//구름 이동 8개 방향
+	static int[] dy = {-1,-1,0,1,1,1,0,-1};
+
 	static void init() throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String[] input = br.readLine().split(" ");
@@ -55,33 +54,24 @@ public class Shark_RainMaker {
 	}
 	static void solve() {
 		for(int m=0;m<M;m++) {
+			check = new boolean[N][N];//이동 후 구름 위치 true로 마킹
 			Order cur = Orders[m];
 			//현재 명령으로 구름 이동!
 			for(Cloud c : cloudList) {
-				int nx = c.x+cloudX[cur.d]*cur.s%N;//%N를 해줘야하나?!
-				int ny = c.y+cloudY[cur.d]*cur.s%N;
-				//범위 모듈러 연산자로 갱신.
-				if(nx<0) {//밑에서 올라온다!
-					nx = N - (Math.abs(nx)%N);
-				} else if(nx>=N) {
-					nx = nx % N;
-				}
-				if(ny<0) {//밑에서 올라온다!
-					ny = N - (Math.abs(ny)%N);
-				} else if(ny>=N) {
-					ny = ny % N;
-				}
+				int nx = (c.x+(dx[cur.d]+N)*cur.s) % N;
+				int ny = (c.y+(dy[cur.d]+N)*cur.s) % N;
 				
 				c.x = nx; c.y = ny;//구름 이동!
 				Map[nx][ny]++;//구름이 이동한 위치에 비가내려서 물 양 1 증가!
+				check[nx][ny] = true;
 			}
 			//물복사 : 물이 증가한칸에 대각선 방향 물있는 바구니 갯수만큼 물양 증가!
 			//구름이 이동하고 물이 증가한 좌표 cloudList
 			for(Cloud c : cloudList) {
 				int cnt=0;
-				for(int i=0;i<4;i++) {
-					int nx = c.x+copyWX[i];
-					int ny = c.y+copyWY[i];
+				for(int i=1;i<8;i+=2) {
+					int nx = c.x+dx[i];
+					int ny = c.y+dy[i];
 					if(nx<0||nx>=N||ny<0||ny>=N) continue;
 					if(Map[nx][ny]>0) cnt++;
 				}//대각선 방향 탐색 종료.
@@ -91,9 +81,7 @@ public class Shark_RainMaker {
 			LinkedList<Cloud> newCloudList = new LinkedList<>();
 			for(int r=0;r<N;r++) {
 				for(int c=0;c<N;c++) {
-					if(Map[r][c] >= 2) {
-						Cloud tmp = new Cloud(r,c);
-						if(cloudList.contains(tmp)) continue;
+					if(!check[r][c] && Map[r][c] >= 2) {
 						Map[r][c] -= 2;
 						newCloudList.add(new Cloud(r,c));
 					}
@@ -101,9 +89,6 @@ public class Shark_RainMaker {
 			}
 			//이렇게 생겨난 구름 위치로 다음 명령 이어서 나간다.
 			cloudList = newCloudList;
-			System.out.printf("%d번째 이동 후 Map 상태 : ",m);
-			System.out.println();
-			print_debugging();
 		}//명령어 반복문.
 	}
 	
@@ -117,25 +102,10 @@ public class Shark_RainMaker {
 		}
 	}
 	public static void main(String[] args) throws Exception {
+		//range_handlingCheck();
 		init();//초기화.
 		solve();//비바라기 연산 수행.
 		countWater();//최종 물 양 계산해서 ans 업데이트.
 		System.out.println(ans);
-	}
-	static void print_debugging() {
-		System.out.println("======= print current Map for debugging ========");
-		for(int i=0;i<N;i++) {
-			for(int j=0;j<N;j++) {
-				System.out.printf("%3d ",Map[i][j]);
-			}
-			System.out.println();
-		}
-		System.out.println("=====================================");
-		
-//		System.out.println("명령어 갯수 : "+orderCnt);
-//		for(int k=0;k<M;k++) {
-//			System.out.printf("Orders[%d] : %d %d ",k,Orders[k].d,Orders[k].s);
-//			System.out.println();
-//		}
 	}
 }
