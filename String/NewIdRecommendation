@@ -1,0 +1,3 @@
+class NewIdRecommendation {
+    System.out.println("Hello World");
+}
