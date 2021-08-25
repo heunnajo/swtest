@@ -3,7 +3,7 @@ import java.util.PriorityQueue;
 import java.util.Arrays;
 class Menu_Renewal_Solution {
     static HashMap<String,Integer> map;
-    static int m;
+    static int m;//동일한  갯수  라  도  손  님  들  이  가  장  많  이 선  택  한  단  품  메  뉴  조  합  을  선  택  
     public String[] solution(String[] orders, int[] course) {
        PriorityQueue<String> pq = new PriorityQueue<>();
         for (int i=0;i<course.length;i++){
@@ -13,7 +13,7 @@ class Menu_Renewal_Solution {
                 find(0, "", course[i], 0, orders[j]);
             }
             for (String s : map.keySet()){
-                if (map.get(s)==m&&m>1){
+                if (map.get(s) == m && m > 1){
                     pq.offer(s);
                 }
             }
