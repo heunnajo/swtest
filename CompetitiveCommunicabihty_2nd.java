@@ -17,10 +17,10 @@ public class CompetitiveCommunicabihty_2nd {
 		
 		@Override
 		public int compareTo(Point o) {
-			if(this.time <o.time || this.time >o.time) {
-				return this.time-o.time;
-			} else {//시간이 같을 때만! 바이러스번호가 작은 것부터 빼준다.
+			if(this.time == o.time) {//시간이 같을 때만! 바이러스번호가 작은 것부터 빼준다.
 				return this.virus_num - o.virus_num;
+			} else {
+				return this.time - o.time;//원래 BFS 특성상 디폴트 같은데 else문이 꼭 있어야하니까 굳이 구현해줌...
 			}
 		}
 			
