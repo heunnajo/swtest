@@ -8,7 +8,7 @@ class Solution {
         //1.정답 찾은 경우
         if(index == 4){
             //1-1.Map에 없는 경우
-            if(map.contains(str) == false){
+            if(map.containsKey(str) == false){
                 List<Integer> list = new LinkedList<>();
                 list.add(Integer.parseInt(info[4]));//info배열의 마지막 원소인 점수를 넣는다! =>오름차순 정렬 안해도되나?나중에 동일한 점수에 대해 최솟값 인덱스 찾아서 x이상인 요소 갯수 구해야하는데...
                 map.put(str,list);
@@ -52,8 +52,8 @@ class Solution {
         if(map.containsKey(str) == false){return 0;}//해당 문의 조건에 대한 답은 0.
         
         //else if(map.contains(str)){
-            List<Integer> li = map.get(str);//리스트를 이분 탐색으로 score값의 최소 인덱스를 찾아야한다.
-            int s = 0, e = li.size()-1;//인덱스
+            List<Integer> list = map.get(str);//리스트를 이분 탐색으로 score값의 최소 인덱스를 찾아야한다.
+            int s = 0, e = list.size()-1;//인덱스
             
             int mid = 0;
             while(s<=e){
@@ -62,22 +62,24 @@ class Solution {
                     s = mid+1;
                 } else if(list.get(mid)>score){
                     e = mid-1;
-                } else if(list.get(mid) == score) break;
+                } else if(list.get(mid) == score) {
+                    break;
+                }
             }
-            return li.size()-mid;
+            return list.size()-mid;
         //}
     }
     static void makeAnswer(String[] query){
         //query에서 유의미한 문의조건, 점수 딱 2가지로 추출해야한다!
-        for(int i=0;i<query.length();i++){
+        for(int i=0;i<query.length;i++){
             String[] tmp = query[i].split(" ");//java,and,backend,and,junior,and,...
             String input = "";
             
-            for(int j=0;j<tmp.length()-1;j++){//마지막 숫자 제외!
+            for(int j=0;j<tmp.length-1;j++){//마지막 숫자 제외!
                 if(tmp[j].equals("and")) continue;
                 input += tmp[j];//javabackendjuniorpizza
             }
-            answer[i] = counting(input,Integer.parseInt(tmp[tmp.length()-1]);
+            answer[i] = counting(input,Integer.parseInt(tmp[tmp.length-1]));
         }
         // for(int i=0;i<answer.length();i++){
         //     answer[i] = counting(,,,);
