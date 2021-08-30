@@ -3,7 +3,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-public class Dijkstra_ShortestPath_AdjacentList {
+public class Dijkstra_PriorityQueue {
 	static int V,E,start;
 	static List<Pair>[] list;
 	//그래프=>인접리스트로 저장할 건데 어떻게 저장하지?

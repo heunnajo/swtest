@@ -3,7 +3,7 @@ package ss;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-public class Dijkstra_ShortestPath_Array {
+public class Dijkstra_Array {
 	static int V,E,start,Dist[][];
 	static int[] D;
 	static int v;
