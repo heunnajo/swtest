@@ -5,9 +5,11 @@ import java.io.InputStreamReader;
 
 public class Dijkstra_ShortestPath_Array {
 	static int V,E,start,Dist[][];
+	static int[] D;
+	static int v;
 	static final int INF = Integer.MAX_VALUE;
 	static int ShortestVertex(int s) {
-		int v = 0;
+		v = 0;
 		int minDist = INF;
 		for(int i=0;i<V;i++) {//start노드의 인접리스트 크기 만큼!
 			for(int j=0;j<V;j++) {
@@ -17,13 +19,19 @@ public class Dijkstra_ShortestPath_Array {
 				}
 			}
 		}
-//		if(minDist == Integer.MAX_VALUE) minDist = -1;
-//		System.out.println("최단 거리 : "+minDist);
+		if(minDist == Integer.MAX_VALUE) minDist = -1;
 //		System.out.println("최단 거리의 정점 : "+v);
+//		System.out.println("최단 거리 : "+minDist);
 		return v;
 	}
-	void Dijkstra() {
-		
+	static void Dijkstra(int s) {
+		for(int i=0;i<V;i++) {
+			//for(int j=0;j<V;j++) {
+				if(D[v]+Dist[v][i] < Dist[s][i]) {
+					D[i] = D[v]+Dist[v][i];
+				}
+			//}
+		}
 	}
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -33,6 +41,7 @@ public class Dijkstra_ShortestPath_Array {
 		E = Integer.parseInt(input[1]);
 		start = Integer.parseInt(br.readLine());
 		Dist = new int[V][V];//n개의 정점마다 간선정보를 저장해야한다.
+		D = new int[V];
 		
 		//Dist 배열을 큰값으로 초기화.
 		for(int i=0;i<V;i++) {
@@ -51,7 +60,18 @@ public class Dijkstra_ShortestPath_Array {
 			Dist[v2][v1] = w;
 		}
 		//Dijkstra 실행.
-		
+		ShortestVertex(start);
+		Dijkstra(start);
+		for(int i=0;i<V;i++) {
+			if(i == start) {
+				System.out.println(0);
+			}
+			else if(D[i] == INF) {
+				System.out.println("INF");
+			} else {
+				System.out.println(D[i]);
+			}
+		}
 		br.close();
 
 	}
