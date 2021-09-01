@@ -27,8 +27,9 @@ class MatchingCardPair_2nd {
             }
             //도착지 못 찾은 경우1 : 상하좌우 탐색
             for(int d=0;d<4;d++){
-                int nx = cur.x+dx[i],ny = cur.y+dy[i];
+                int nx = cur.x+dx[d],ny = cur.y+dy[d];
                 if(check(nx,ny)) continue;
+                
                 if(!visited[nx][ny]){
                     visited[nx][ny] = true;
                     q.add(new Point(nx,ny,cur.cnt+1));
@@ -36,11 +37,13 @@ class MatchingCardPair_2nd {
             //도착지 못 찾은 경우2 : Ctrl + 상하좌우 탐색
             //큐에 넣을 때 이동한 거리값은 현재 큐에서 꺼낸 노드의 cnt 기준 cnt+1하면 된다!
                 for(int i=0;i<2;i++){//4x4크기이기 때문에 최돼 2번더 이동할 수 있음.
+                    //1. 한번 더 이동하기 전에 먼저 숫자 찾은 경우 검사!
+                    if(Board[nx][ny] != 0) break;//이동 반복을 종료. 숫자를 찾은 경우. 근데 이게 찾으려는 숫자가 맞나??
+                    //2. 범위 초과 검사!
+                    if(check(nx+dx[d],ny+dy[d])) break;
                     //d와 동일한 방향으로 범위가 넘지 않을 때까지 계속 반복해서 이동한다!!!
                     nx += dx[d];
                     ny += dy[d];
-                    if(check(nx,ny)) continue;
-                    if(Board[nx][ny] != 0) break;//이동 반복을 종료. 숫자를 찾은 경우. 근데 이게 찾으려는 숫자가 맞나??
                 }
                 if(!visited[nx][ny]){
                     visited[nx][ny] = true;
@@ -51,7 +54,7 @@ class MatchingCardPair_2nd {
         return INF;//최댓값을 리턴.목적지 좌표 못 찾는 경우.(거의 불가능한 경우)
     }
     static boolean check(int x,int y){//범위 벗어나면 true를 리턴!
-        return x<0 || x>3 || y<0 y>3;
+        return x<0 || x>3 || y<0 || y>3;
     }
     //재귀함수로 순열을 생성한다.
     static int permutate(Point src){//매개변수는 순열을 만들 시작점, 리턴 : 최소 조작횟수를 리턴!?
@@ -62,7 +65,8 @@ class MatchingCardPair_2nd {
             List<Point> cards = new LinkedList<>();
             for(int i=0;i<4;i++){
                 for(int j=0;j<4;j++){
-                    if(num == Board[i][j]){
+                    //if(num == Board[i][j]){
+                    if(Board[i][j] == num){
                         cards.add(new Point(i,j,0));
                     }
                 }
@@ -86,7 +90,7 @@ class MatchingCardPair_2nd {
                 Board[cards.get(i).x][cards.get(i).y] = num;
             }
         }
-        if(ret == INF) return INF;//연산을 실행하지 않은 경우.
+        if(ret == INF) return 0;//연산을 실행하지 않은 경우.
         return ret;
     }
     public int solution(int[][] board, int r, int c) {
