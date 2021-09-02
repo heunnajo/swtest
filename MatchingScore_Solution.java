@@ -20,7 +20,7 @@ class MatchingScore_Solution {
                 return 1;
             } else return -1;
         } 
-    }
+    };
     public int solution(String word, String[] pages) {
         int wsize = word.length();
         //외부링크(a태그)를 통해서 어떤 링크를 가지고 있는지 알아내야한다.
@@ -36,7 +36,7 @@ class MatchingScore_Solution {
             //pages[i]의 url 구하기! => meta 태그에서 content 속성값
             int mid = 0, posL = 0, posR = 0;//posL:meta태그 시작, posR:meta태그 끝
             //meta태그의 시작,끝 위치 찾는다.
-            while(mid<posL){//html 문자열에서 indexOf를 이용하여 <meta태그의 위치를 찾아서 반환한다!
+            while(mid<=posL){//html 문자열에서 indexOf를 이용하여 <meta태그의 위치를 찾아서 반환한다!
                 //posL을 1씩 증가시켜 <meta 위치를 찾고, 그 위치 인덱스를 posL에 저장한다.
                 posL = s.indexOf("<meta",posL+1);//2번째 파라미터는 검색 시작 위치.1씩 증가.
                 posR = s.indexOf(">",posL);
@@ -44,7 +44,7 @@ class MatchingScore_Solution {
                 mid = s.lastIndexOf("https://",posR);
             }
             //url 위치 찾으면 추출=>url마지막 위치는 mid부터 시작, 큰따옴표만날 때까지
-            posR = s.indexOf("/",mid);//url마지막을 posR에 저장
+            posR = s.indexOf("\"",mid);//url마지막을 posR에 저장
             String url = s.substring(mid,posR);
             
             //기본점수 계산 : 검색어 찾아서 카운팅.
@@ -98,8 +98,7 @@ class MatchingScore_Solution {
             }
         }
         //문제에서 주어진 대로, 매칭점수가 큰 것이 앞에 오도록 정렬, 매칭 점수 동일하다면 index가 작은 것부터
-        pageList.sort(new Comp());                   
-         
+        pageList.sort(new Comp());
         return pageList.get(0).idx;
     }
 }
