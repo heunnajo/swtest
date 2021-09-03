@@ -57,7 +57,7 @@ class RankingSearch_2nd {
             
             //if(map.get(mid) <= score){
             int mid = (s+e)/2;//반복문 돌때마다 s또는 e가 갱신되기 때문에 이에 따라 mid도 갱신되야함!
-            if(map.get(mid) < score){
+            if(list.get(mid) < score){
                 s = mid+1;
             } else{//mid>score
                 e = mid-1;
@@ -68,8 +68,9 @@ class RankingSearch_2nd {
     public int[] solution(String[] info, String[] query) {
         //int[] answer = {};
         int[] answer = new int[query.length];
+        mainLogic(info);//map을 완성.
         for(int i=0;i<query.length;i++){
-            mainLogic(info,query);//map을 완성.
+            //mainLogic(info);//map을 완성.
             String[] arr = query[i].split(" ");
             
             String str = ""; int score = Integer.parseInt(arr[arr.length-1]);//유의미한 데이터만 추출!
