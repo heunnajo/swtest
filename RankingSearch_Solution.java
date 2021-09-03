@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Iterator;
 
 class RankingSearch_Solution {
-    static ArrayList<ArrayList<Integer>> list=new ArrayList<>();    
+    //static ArrayList<ArrayList<Integer>> list=new ArrayList<>();    
     static Map<String,List<Integer>> map=new HashMap<>();
     static int[] answer;
     
