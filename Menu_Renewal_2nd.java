@@ -1,5 +1,6 @@
 import java.util.*;
 class Menu_Renewal_2nd {
+    //static String[] Order;
     static String[] answer;
     static Map<String,Integer> menuMap;
     static int maxFreq;
@@ -17,6 +18,7 @@ class Menu_Renewal_2nd {
             //Map에 있는지 확인. 있으면 기존 value 조회해서+1, 없으면 <str,Integer> 생성해서 0+1
             menuMap.put(tmp,menuMap.getOrDefault(tmp,0)+1);
             maxFreq = Math.max(menuMap.get(str),maxFreq);//course[i]길이의 최빈값 갖는 문자열을 찾아서 그 빈도수를 저장!
+            return;
         }
         //예외 케이스 구현! 계속 선택X하다가 결국 orders길이를 벗어나는 경우
         if(index < target){
@@ -46,6 +48,7 @@ class Menu_Renewal_2nd {
         }
         //pq 하나식 뽑아서 answer에 저장해야함.
         int idx=0;//answer배열 초기화 안해줘도 되나...
+        String ans[] = new String[pq.size()];
         while(!pq.isEmpty()){
             answer[idx++] = pq.remove();
         }
