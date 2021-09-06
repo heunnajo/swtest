@@ -10,8 +10,8 @@ public class SlopeWay {
 		int[] height = new int[N];
 		
 		for(int i=0;i<N;i++) {//dir=0이면 행에 대해 수행!행값은 x로 그대로, 열값이 바뀐다!
-			//height[i] = (dir == 0)? Map[x][i] : Map[i][y];
-			height[i] = (dir == 0)? Map[x][y+i] : Map[x+i][y];
+			height[i] = (dir == 0)? Map[x][i] : Map[i][y];
+			//height[i] = (dir == 0)? Map[x][y+i] : Map[x+i][y];
 		}
 		//i,i+1번째 칸 계속 비교하면서 경사로 놓을 수 있는지 검사하고, 가능하다면 놓는다!
 		for(int i=0;i<N-1;i++) {
