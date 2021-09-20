@@ -1,0 +1,53 @@
+#include <iostream>
+using namespace std;
+const int MAX = 50;
+int graph[MAX][MAX];
+int n, m;
+bool dfs(int x, int y) {
+    if (x < 0 || y < 0 || x >= n || y >= m) {
+        return false;
+    }
+    if (graph[x][y] == 1) {
+        graph[x][y] = 0;
+        dfs(x, y + 1);
+        dfs(x, y - 1);
+        dfs(x - 1, y);
+        dfs(x + 1, y);
+        dfs(x - 1, y + 1);
+        dfs(x - 1, y - 1);
+        dfs(x + 1, y + 1);
+        dfs(x + 1, y - 1);
+        return true;
+    }
+    return false;
+}
+void Reset() {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < m; j++) {
+            graph[i][j] = 0;
+        }
+    }
+}
+int main() {
+    while (true) {
+        cin >> n >> m;
+        if (n == 0 && m == 0) {
+            return 0;
+        }
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                cin >> graph[i][j];
+            }
+        }
+        int res = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (dfs(i, j)) {
+                    res++;
+                }
+            }
+        }
+        cout << res << endl;
+        Reset();
+    }
+}
