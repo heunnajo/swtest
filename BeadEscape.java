@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Queue;
 import java.util.LinkedList;
-public class BeadEscape2_3rd {
+public class BeadEscape {
 	static int N,M,Rx,Ry,Bx,By;//N:행,M:열 ,RxRy BxBy 구슬 초기위치 저장 
 	static String[][] Board;
 	static int[] dx = {-1,1,0,0};
@@ -27,7 +27,7 @@ public class BeadEscape2_3rd {
 		while(!q.isEmpty()) {
 			Point cur = q.remove();
 			//백트랙킹.cur의 cnt가 10보다 크면 그 때까지 빨간 구슬이 구멍 도달 못했다는 의미이므로  -1을 출력.
-			if(cur.cnt >= 10) return -1;
+			if(cur.cnt >= 10) return 0;
 			for(int dir=0;dir<4;dir++) {
 				//1.구슬 이동
 				//1-1.파란구슬
@@ -58,27 +58,25 @@ public class BeadEscape2_3rd {
 				if(Board[nBx][nBy].equals("O")) continue;
 				//2-2.빨간 구슬:정답 찾은 경우 
 				if(Board[nRx][nRy].equals("O")) {
-						return cur.cnt+1;//이동시키기 전에 조건 비교를 하는 것이기 때문에.
+						return 1;//이동시키기 전에 조건 비교를 하는 것이기 때문에.
 //					}
 				}
 				//3.이동 후 2개 구슬 동일한 위치에 있을 때
 				if(nRx == nBx && nRy == nBy) {
 					if(dir == 0) {//상 
-//						if(Rx<Bx) {nBx = nRx+1;}
-						if(cur.Rx<cur.Bx) {nBx = nBx+1;}
+						if(cur.Rx<cur.Bx) {nBx = nRx+1;}
 						else {nRx=nRx+1;}//Rx>Bx
 					} else if(dir == 1) {//하 
 						if(cur.Rx<cur.Bx) {nRx=nRx-1;}
-//						else {nBx = nRx-1;}
-						else {nBx = nBx-1;}//Rx>Bx
+						else {nBx = nRx-1;}
+//						else {nBx = nBx-1;}//Rx>Bx
 					} else if(dir == 2) {//좌 
-//						if(Ry<By) {nBy =nRy+1;}
-						if(cur.Ry<cur.By) {nBy =nBy+1;}
+						if(cur.Ry<cur.By) {nBy =nRy+1;}
 						else {nRy = nRy+1;}//Ry>By
 					} else {//우 
 						if(cur.Ry<cur.By) {nRy=nRy-1;}
-//						else {nBy = nRy-1;}
-						else {nBy = nBy-1;}//Ry>By
+						else {nBy = nRy-1;}
+//						else {nBy = nBy-1;}//Ry>By
 					}
 				}
 				//4.다음 위치 큐에 삽입&방문체크
@@ -88,7 +86,7 @@ public class BeadEscape2_3rd {
 				}
 			}
 		}
-		return -1;
+		return 0;
 	}
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
