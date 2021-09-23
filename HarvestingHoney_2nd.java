@@ -34,23 +34,23 @@ public class HarvestingHoney_2nd {
 	static void makeProfit() {
 		for(int i=0;i<N;i++) {
 			for(int j=0;j<=N-M;j++) {
-				profitSubset(i,j,0,0);
+				profitSubset(i,j,0,0,0);
 			}
 		}
 	}
-	static void profitSubset(int x,int y,int sum,int cnt) {
+	static void profitSubset(int x,int y,int sum,int cnt,int maxProrfit) {
 		//불가능한 경우 : sum > C
 		if(sum>C) return;
 		//정답 찾은 경우 : M개 구간 C이내의 합을 다 구한 경우 최대합으로 갱신해서 Profit배열에 저장!
 		if(cnt == M) {
-			Profit[x][y-M] = Math.max(Profit[x][y-M], sum);
+			Profit[x][y-M] = Math.max(Profit[x][y-M], maxProrfit);
 			return;
 		}
 		//현재 칸을 합에 포함할지 선택 결정, 다음 경우 호출
 		//1.선택O
-		profitSubset(x,y+1,sum+Map[x][y]*Map[x][y],cnt+1);
+		profitSubset(x,y+1,sum+Map[x][y],cnt+1,maxProrfit+Map[x][y]*Map[x][y]);
 		//2.선택X
-		profitSubset(x,y+1,sum,cnt+1);
+		profitSubset(x,y+1,sum,cnt+1,maxProrfit);
 	}
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -78,7 +78,6 @@ public class HarvestingHoney_2nd {
 			sb.append("#"+t+" "+ans+"\n");
 		}
 		System.out.println(sb);
-		// TODO Auto-generated method stub
 
 	}
 
