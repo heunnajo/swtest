@@ -24,19 +24,20 @@ public class DesertCafe_2nd {
 		//if(nx<0 || nx>N-1 || ny<0 || ny>N-1) return;//범위 체크:이 또한 이동하고 난 후 해야하는 것 아닐까?놉 이건재귀함수 호출&실행하고 난 후에 입구에 위치해도 될듯.
 		//if(visited[Map[nx][ny]]) return;//중복 체크:이동하고난 후 체크!
 		if(dir>3) return;//4가지 방향만 가능
-		if(nx<sx) return;//백트랙킹.처음좌표의 x좌표보다 작으면 안된다.
 		
 		//3.현재 선택하고, 다음 경우 호출
 		//이동할 좌표 계산
 		nx += dx[dir];ny+=dy[dir];
-		if(nx<0 || nx>N-1 || ny<0 || ny>N-1) return;//범위 체크:이 또한 이동하고 난 후 해야하는 것 아닐까?
-		if(visited[Map[nx][ny]]) return;//중복 체크:이동하고난 후 체크!
-		
 		//2.정답 찾은 경우
 		if(nx==sx && ny == sy) {//처음 좌표를 넣자마자 이 조건에 해당되서 리턴된다.그렇기 때문에 정답찾은 경우는 nx,ny를 갱신하고 난 후에 필요한듯하다!
 			ans = Math.max(ans, cnt);//최댓값 도출인데 어떻게 왜 -1이 나오지?
 			return;
 		}
+		if(nx<sx) return;//백트랙킹.처음좌표의 x좌표보다 작으면 안된다.
+		
+		if(nx<0 || nx>N-1 || ny<0 || ny>N-1) return;//범위 체크:이 또한 이동하고 난 후 해야하는 것 아닐까?
+		if(visited[Map[nx][ny]]) return;//중복 체크:이동하고난 후 체크!
+		
 		
 		visited[Map[nx][ny]] = true;
 		dfs(sx,sy,nx,ny,dir,visited,cnt+1);
