@@ -33,16 +33,14 @@ public class SpecificMagnet {
 		return;
 	}
 	static void go(int idx,int dir,int rotDir) {
-		if(idx<0 || idx>3) return;
+		//if(idx<0 || idx>3) return;
 		//초기 실행:어디서 왔는지 방향dir이 없으므로, 현재 idx 톱니 회전하고, idx-1 또는 idx+1 회전.
 		if(dir==2) {
-			if(idx-1>=0) {go(idx-1,0,-rotDir);}
-			if(idx+1<4) {go(idx+1,1,-rotDir);}
-			//현재 idx톱니 회전
-			rotate(idx,rotDir);
+			if(idx-1>=0 && Magnet[idx][6] != Magnet[idx-1][2]) {go(idx-1,0,-rotDir);}
+			if(idx+1<4 && Magnet[idx][2] != Magnet[idx+1][6]) {go(idx+1,1,-rotDir);}
 		}
 		//idx-1,idx+1 조건 판단 후 먼저 회전
-		if(dir == 0){//현재톱니=왼쪽톱니 .오른쪽 재귀X 왼쪽으로만진행!
+		else if(dir == 0){//현재톱니=왼쪽톱니 .오른쪽 재귀X 왼쪽으로만진행!
 			if(idx-1>=0 && Magnet[idx][6] != Magnet[idx-1][2]) {//바로 idx-1에 접근하면 안됨.초기실행과 재귀실행 구분?
 				go(idx-1,0,-rotDir);//현재 회전방향과 반대
 			}
@@ -83,22 +81,16 @@ public class SpecificMagnet {
 			for(int i=0;i<K;i++) {
 				st = new StringTokenizer(br.readLine());
 				int idx = Integer.parseInt(st.nextToken())-1;
-				int dir = Integer.parseInt(st.nextToken())-1;
+				int dir = Integer.parseInt(st.nextToken());
 				rotateInfo ri = new rotateInfo(idx,dir);
 				Info[infoCnt++] = ri;
 			}
-			ans = 0;
 			for(int i=0;i<K;i++) {
 				rotateInfo ri = Info[i];
-				System.out.println(i+"번 회전하기 전:");
-				printMagnet();
-				
 				go(ri.idx,2,ri.dir);
-				
-				System.out.println(i+"번 회전하기 후:");
-				printMagnet();
 			}
-			cal();
+			ans = 0;
+			cal();//회전 끝난 후 각 톱니0번째값 합산 
 			sb.append("#"+t+" "+ans+"\n");
 		}
 		System.out.print(sb);
@@ -114,13 +106,3 @@ public class SpecificMagnet {
 		System.out.println();
 	}
 }
-//for(int i=0;i<4;i++) {
-//	for(int j=0;j<8;j++) {
-//		System.out.print(Magnet[i][j]+" ");
-//	}
-//	System.out.println();
-//}
-//for(int i=0;i<K;i++) {
-//	rotateInfo ri = Info[i];
-//	System.out.println("idx: "+ ri.idx+" "+"dir: "+ri.dir+" ");
-//}
