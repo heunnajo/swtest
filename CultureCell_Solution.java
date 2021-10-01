@@ -5,7 +5,7 @@ import java.io.StringReader;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
   
-public class CultureCell {
+public class CultureCell_Solution {
     static BufferedReader input = new BufferedReader(new InputStreamReader(System.in));
     static StringBuilder output = new StringBuilder();
     static StringTokenizer tokens;
