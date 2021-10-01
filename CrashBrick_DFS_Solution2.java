@@ -4,7 +4,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
-public class CrashBrick_DFS_Solution2 {
+public class CrashBrick_DFS_Solution2
+ {
 	static class Info {
 		int x, y, val;
 
