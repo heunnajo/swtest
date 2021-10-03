@@ -6,6 +6,10 @@ import java.util.LinkedList;
 import java.util.HashMap;
 public class AtomExtinctionSimulation_2nd {
 	static int E,T,N;
+    static int UP = 0;
+    static int DOWN = 1;
+    static int LEFT = 2;
+    static int RIGHT = 3;
 	static class Atom{
 		int x,y,dir,K;
 		Atom(int x,int y,int dir,int K){
@@ -14,6 +18,12 @@ public class AtomExtinctionSimulation_2nd {
 			this.dir = dir;
 			this.K = K;
 		}
+        void move(){
+            if(dir == UP) this.y++;
+            else if(dir == DOWN) this.y--;
+            else if(dir == LEFT) this.x--;
+            else if(dir == RIGHT) this.x++;
+        }
 	}
 	static LinkedList<Atom> Atoms;
 	static HashMap<Integer,LinkedList<Atom>> map;
