@@ -34,6 +34,7 @@ public class AtomExtinctionSimulation_2nd {
 	static void solve() {
 		while(true) {
 			//매 이동마다 초기화해줘야함.
+            if(Atoms.size()<=1) return;
 			map = new HashMap<>();
 			delList = new LinkedList<>();
 			//1.원자 이동
@@ -50,7 +51,7 @@ public class AtomExtinctionSimulation_2nd {
 			checkCrash();
 			//3.원자 삭제:delList에 있는 원자들 Atoms에서 삭제,삭제하는 원자들 에너지 합산
 			Atoms.removeAll(delList);
-			if(Atoms.size()<=1) return;
+			
 		}
 		
 	}
