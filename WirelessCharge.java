@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
  
-public class WirelessCharge{
+public class WirelessCharge_Solution2{
     static info[]user;
     static int M,A,ret;
     static info[]BC;
