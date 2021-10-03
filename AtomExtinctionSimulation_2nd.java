@@ -47,20 +47,22 @@ public class AtomExtinctionSimulation_2nd {
 				else {makeMap(a);}
 			}
 			//2.원자 충돌 처리:map 순회하면서 2개이상 원자들 delList에 추가
-			for(Integer pos:map.keySet()) {
-				LinkedList<Atom> list = map.get(pos);
-				if(list.size()>=2) {
-					delList.addAll(list);
-					for(Atom crash:list) {E+=crash.K;}
-				}
-			}
+			checkCrash();
 			//3.원자 삭제:delList에 있는 원자들 Atoms에서 삭제,삭제하는 원자들 에너지 합산
-			//for(Atom del:delList) {}
 			Atoms.removeAll(delList);
 			if(Atoms.size()<=1) return;
 		}
 		
 	}
+    static void checkCrash(){
+        for(Integer pos:map.keySet()) {
+            LinkedList<Atom> list = map.get(pos);
+            if(list.size()>=2) {
+                delList.addAll(list);
+                for(Atom crash:list) {E+=crash.K;}
+            }
+        }
+    }
 	static void makeMap(Atom a) {
 		int pos = a.x*4001 + a.y;
 		if(map.containsKey(pos)) {
