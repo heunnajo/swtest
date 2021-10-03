@@ -3,9 +3,9 @@ import java.io.*;
 import java.util.*;
 public class WirelessCharge {
 	static int ans,T,M,A,tmpSum;
-	static int[] dx = {0,-1,0,1,-1};
-	static int[] dy = {0,0,1,0,0};
-//	static ArrayList<Integer>[][] moveInfo;
+	static int[] dx = {0,-1,0,1,0};//0:이동X 1:상 2:우 3:하 4:좌
+	static int[] dy = {0,0,1,0,-1};
+
 	static int[][] moveInfo;
 	static class pnt{
 		int x,y;
@@ -37,17 +37,15 @@ public class WirelessCharge {
 			M = Integer.parseInt(st.nextToken());
 			A = Integer.parseInt(st.nextToken());
 			
-			//moveInfo = new ArrayList[2][M];
-//			for(int i=0;i<2;i++) {
-//				for(int j=0;j<M;j++) {
-//					moveInfo[i][j] = new ArrayList<>();
-//				}
-//			}
 			BCs = new LinkedList<>();
-			moveInfo = new int[2][M];
 			Users = new LinkedList<>();
-			Users.add(new pnt(0,0));
-			Users.add(new pnt(9,9));
+			moveInfo = new int[2][M];
+			
+//			Users.add(new pnt(0,0));
+//			Users.add(new pnt(9,9));
+			Users.add(new pnt(1,1));
+			Users.add(new pnt(10,10));
+//			ans = 0;
 			
 			for(int i=0;i<2;i++) {
 				st = new StringTokenizer(br.readLine());
@@ -64,13 +62,15 @@ public class WirelessCharge {
 				int p = Integer.parseInt(st.nextToken());
 				BCs.add(new BC(y,x,c,p,0));
 			}
+			
 			solve();
 			sb.append("#"+t+" "+ans+"\n");
 		}
 		System.out.print(sb);
 	}
 	static void solve() {
-		count();//현시점 (AX,AY), (BX,BY)에 따른 충전합 최댓값을 ans에 저장한다.
+		ans = 0;
+		ans += count();//현시점 (AX,AY), (BX,BY)에 따른 충전합 최댓값을 ans에 합산한다.
 		for(int time=0;time<M;time++) {//사용자1 사용자2 초기위치에서 moveInfo[time] 이동 정보로 이동.
 			for(int i=0;i<2;i++) {
 				Users.get(i).x += dx[moveInfo[i][time]];
@@ -80,40 +80,32 @@ public class WirelessCharge {
 		}
 	}
 	static int count() {
-//		ans = 0;
 		tmpSum = 0;
+		//return go(0,0);
 		go(0,0);
 		return tmpSum;
 	}
-	static int go(int index,int sum) {
-		if(index==2) {tmpSum =  Math.max(ans, sum); return tmpSum;}
+	//static int go(int index,int sum) {
+	static void go(int index,int sum) {
+//		if(index==2) {tmpSum =  Math.max(ans, sum); return tmpSum;}
+		if(index==2) {tmpSum =  Math.max(tmpSum, sum); return;}
 		
 		for(int a=0;a<A;a++) {
 			BC cur = BCs.get(a);
-			if(cur.used == 0&& dist(cur,index)) {
+			if(cur.used == 0 && dist(cur,index)) {
 				cur.used = 1;
 				go(index+1,sum+cur.p);
 				cur.used = 0;
 			}
 		}
+		go(index+1,sum);//index번째 사용자가 A개의 BC 중에 속하는 게 없을 때!
 	}
 	static boolean dist(BC curBC,int user) {
 		pnt curU = Users.get(user);
-		int d = Math.abs(curU.x-curBC.y) + Math.abs(curU.y-curBC.x);
+		//int d = Math.abs(curU.x-curBC.y) + Math.abs(curU.y-curBC.x);
+		int d = Math.abs(curU.x-curBC.x) + Math.abs(curU.y-curBC.y);
 		if(d<=curBC.c) return true;
 		else return false;
 	}
 	
 }
-//			for(int i=0;i<2;i++) {
-//				for(int j=0;j<M;j++) {
-//					System.out.print(moveInfo[i][j]+" ");
-//				}
-//				System.out.println();
-//			}
-
-//			for(int i = 0;i<A;i++) {
-//				BC b = BCs.get(i);
-//				System.out.println(b.y+" "+b.x+" "+b.c+" "+b.p+" ");
-//			}
-//			System.out.println();
