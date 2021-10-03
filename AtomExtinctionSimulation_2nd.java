@@ -35,8 +35,8 @@ public class AtomExtinctionSimulation_2nd {
 		while(true) {
 			//매 이동마다 초기화해줘야함.
             if(Atoms.size()<=1) return;
-			map = new HashMap<>();
-			delList = new LinkedList<>();
+			map.clear();
+			delList.clear();
 			//1.원자 이동
 			for(Atom a:Atoms) {
 				if(a.dir==0) a.y++;
@@ -87,7 +87,8 @@ public class AtomExtinctionSimulation_2nd {
 			N = Integer.parseInt(br.readLine());
 			
 			Atoms = new LinkedList<>();
-			
+			map = new HashMap<>();
+			delList = new LinkedList<>();
 			
 			for(int i=0;i<N;i++) {
 				st = new StringTokenizer(br.readLine());
