@@ -1,3 +1,4 @@
+package String;
 class NewIdRecommendation_regex_2nd {
     public String solution(String new_id) {
         //step1.
