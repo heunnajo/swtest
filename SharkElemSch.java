@@ -1,7 +1,6 @@
-package ss;
 import java.io.*;
 import java.util.*;
-public class SharkElemSch
+public class Main
 {
     static int ans,N;
     static class Student{
@@ -29,24 +28,24 @@ public class SharkElemSch
 	    
 	    for(int i=0;i<N*N;i++){
 	        st = new StringTokenizer(br.readLine());
-	        int num = Integer.parseInt(st.nextToken())-1;
-	        int s1 = Integer.parseInt(st.nextToken())-1;
-	        int s2 = Integer.parseInt(st.nextToken())-1;
-	        int s3 = Integer.parseInt(st.nextToken())-1;
-	        int s4 = Integer.parseInt(st.nextToken())-1;
-//	        int num = Integer.parseInt(st.nextToken());
-//	        int s1 = Integer.parseInt(st.nextToken());
-//	        int s2 = Integer.parseInt(st.nextToken());
-//	        int s3 = Integer.parseInt(st.nextToken());
-//	        int s4 = Integer.parseInt(st.nextToken());
+//	        int num = Integer.parseInt(st.nextToken())-1;
+//	        int s1 = Integer.parseInt(st.nextToken())-1;
+//	        int s2 = Integer.parseInt(st.nextToken())-1;
+//	        int s3 = Integer.parseInt(st.nextToken())-1;
+//	        int s4 = Integer.parseInt(st.nextToken())-1;
+	        int num = Integer.parseInt(st.nextToken());
+	        int s1 = Integer.parseInt(st.nextToken());
+	        int s2 = Integer.parseInt(st.nextToken());
+	        int s3 = Integer.parseInt(st.nextToken());
+	        int s4 = Integer.parseInt(st.nextToken());
 	        
 	        findSeat(num,new int [] {s1,s2,s3,s4});
 	    }
 	    //N*N명 좌석 선택한 후 만족도 계산:map을 이용하여 학생 위치정보, flist와의 인접거리 구해서 인접한 친구 명수 구할 수 있다.
 	    int cnt;
 	    ans = 0;
-	    for(int i=0;i<N*N;i++) {
-//    	for(int i=1;i<=N*N;i++) {
+//	    for(int i=0;i<N*N;i++) {
+    	for(int i=1;i<=N*N;i++) {
 	    	cnt = 0;
 	    	Student s = map.get(i);//일부러 1씩 빼고 0부터 인덱스 시작했는데 답이 틀리게 나오는 이유는 뭐지..
 	    	int[] flist = s.flist;
@@ -83,6 +82,7 @@ public class SharkElemSch
 		int choiceX = -1; int choiceY = -1;//최종선택할 x,y 좌표
 		for(int i=0;i<N;i++) {
 			for(int j=0;j<N;j++) {
+				if(classroom[i][j] != 0) continue;
 				if(maxLike<nearScore[i][j]) {
 					choiceX = i;choiceY = j;
 					maxLike = nearScore[i][j];
@@ -101,7 +101,7 @@ public class SharkElemSch
 			int nx = choiceX+dx[d];
 			int ny = choiceY+dy[d];
 			
-			if(isOut(nx,ny)) continue;
+			if(isOut(nx,ny) || classroom[nx][ny]!= 0) continue;//classsroom[nx][ny]값이 0이면 감소시킨다?!
 			EmptySeat[nx][ny]--;
 		}
 	}
