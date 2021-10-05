@@ -1,4 +1,4 @@
-package ss;
+package String;
 import java.io.*;
 public class ThreeTimes {
 
