@@ -1,7 +1,7 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Scanner;
-public class Main {
+public class Make1 {
 	static int[] d;
 	static int go(int n) {
 		if(n==1) return 0;
