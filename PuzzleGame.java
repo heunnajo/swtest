@@ -1,6 +1,6 @@
 import java.util.*;
 import java.awt.*;
-class Solution {
+class PuzzleGame {
     static HashMap<String,Point> blockStore;
     static LinkedList<Point> blockList;
     static int cnt;
