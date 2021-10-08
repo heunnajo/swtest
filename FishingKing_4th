@@ -1,0 +1,141 @@
+package ss;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
+
+public class FishingKing_4th {
+	static int shcnt,ans,R,C,M;//ans에 잡은 상어크기 합산!
+	static int[] dx = {-1,0,1,0};
+	static int[] dy = {0,1,0,-1};
+	static class Shark{
+		boolean flag;
+		int x,y;
+		int speed,dir,size;
+		Shark(int speed,int dir,int size){
+			this.speed = speed;
+			this.dir = dir;
+			this.size = size;
+		}
+		Shark(int x,int y,int speed,int dir,int size){
+			this.x = x;
+			this.y = y;
+			this.speed = speed;
+			this.dir = dir;
+			this.size = size;
+		}
+	}
+	static ArrayList<Shark>[][] SharkMap,tmpArr;
+	static Shark[] SharkArr;
+	public static void main(String[] args) throws Exception{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = null;
+		
+		st = new StringTokenizer(br.readLine());
+		
+		R = Integer.parseInt(st.nextToken());
+		C = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
+		SharkArr = new Shark[M];
+		SharkMap = new ArrayList[R][C];
+		tmpArr = new ArrayList[R][C];
+		shcnt = M;
+		for(int i=0;i<R;i++) {
+			for(int j=0;j<C;j++) {
+				SharkMap[i][j] = new ArrayList<>();
+				tmpArr[i][j] = new ArrayList<>();
+			}
+		}
+		
+		for(int i=0;i<M;i++) {//M개의 상어 정보 저장!
+			st = new StringTokenizer(br.readLine());
+			int x = Integer.parseInt(st.nextToken())-1;
+			int y = Integer.parseInt(st.nextToken())-1;
+			int speed = Integer.parseInt(st.nextToken());
+			int dir = Integer.parseInt(st.nextToken())-1;
+			int size = Integer.parseInt(st.nextToken());
+			if(dir == 1)dir=2;
+			else if(dir == 2)dir=1;
+			
+			SharkArr[i] = new Shark(x,y,speed,dir,size);
+			SharkMap[x][y].add(new Shark(speed,dir,size));
+		}
+		solve();
+		System.out.println(ans);
+	}
+	static void resetFlag() {
+		for(int i=0;i<M;i++) {//상어 죽을 때마다 갯수 변하는디...하..
+			SharkArr[i].flag = false;
+		}
+	}
+	static void solve() {
+		for(int c=0;c<C;c++) {//1.낚시왕 오른쪽으로 이동
+			resetFlag();
+			for(int r=0;r<R;r++) {//2.상어 갓챠
+				if(SharkMap[r][c].size()>0) {//null로 비교해도 되려나?!
+					ans += SharkMap[r][c].get(0).size;
+					SharkMap[r][c].remove(0);
+					break;//물고기 한번 잡았으면 계속 밑으로 가는 게 아니라 종료!
+				}
+			}
+			//3-1.상어 이동 전 2차원 배열 하나 더 생성!
+			for(int i=0;i<R;i++) {
+				for(int j=0;j<C;j++) {
+					tmpArr[i][j] = SharkMap[i][j];//원래 배열
+					SharkMap[i][j] = null;//새로 이동시킬 배열!
+				}
+			}
+					
+			//3-2.상어 이동:상어 위치들을 이미 알고 있는데 R*C 전체를 순회해야만 할까..!일단 생각한 방법으로 구현.
+			for(int i=0;i<R;i++) {
+				for(int j=0;j<C;j++) {
+					if(SharkMap[i][j].size()>1) {//이동시킬 상어가 있다는 뜻.
+						//이동하려는 칸에 상어가 1마리가 없다는 가정 하.
+						Shark cur = tmpArr[i][j].get(0);
+						int speed = cur.speed, dir = cur.dir, size = cur.size;
+						int nx = cur.x+dx[cur.dir]*cur.speed;
+						int ny = cur.y+dy[cur.dir]*cur.speed;
+						if(nx<0) {nx = -nx; cur.dir = (cur.dir+2)%4;}//아래로 이동시킴.
+						if(nx>R-1) {
+							int a = nx/(R-1);
+							int b = nx%(R-1);
+							if(a%2 == 0) {nx = b;}
+							else {nx = R-1-b;cur.dir = (cur.dir+2)%4;}
+						}
+						if(ny<0) {ny = -ny;cur.dir = (cur.dir+2)%4;}
+						if(ny>C-1) {
+							int d = ny/(C-1);
+							int e = ny%(C-1);
+							if(d%2 == 0) {ny = e;}
+							else {ny = C-1-e;cur.dir = (cur.dir+2)%4;}
+						}
+						//이동할 위치(nx,ny) 생성 완료
+						/*if(SharkMap[nx][ny]==null) {
+							SharkMap[nx][ny].add(new Shark(speed,dir,size));
+						} else {//이미 이동한 상어가 있는 경우:상어는 한번에 한마리씩 이동시키기 때문에 이미 칸에 존재하는 상어도 1마리다.
+							if(SharkMap[nx][ny].get(0).size<size) {
+								SharkMap[nx][ny].remove(0);//기존 상어 삭제하고 현재 상어 추가
+								SharkMap[nx][ny].add(new Shark(speed,dir,size));
+							}//현재 상어크기 size가 더 작은 경우:이동시키지 않는다 =>(nx,ny)에 추가X=>자동 삭제 처리
+						}*/
+						if(SharkMap[nx][ny] == null||SharkMap[nx][ny]!= null && SharkMap[nx][ny].size<size) {
+							SharkMap[nx][ny] = cur;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+//M개의 상어 정보 3개 모두 확인 완료.
+//		for(int i=0;i<R;i++) {
+//			for(int j=0;j<C;j++) {
+//				if(SharkMap[i][j].size()>0) {
+//					Shark cur = SharkMap[i][j].get(0);
+////					System.out.print(cur.speed+" ");
+//					System.out.print(cur.dir+" ");
+//				} else System.out.print(0+" ");
+//			}
+//			System.out.println();
+//		}
