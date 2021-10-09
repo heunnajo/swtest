@@ -1,4 +1,4 @@
-package ss;
+package Naver;
 import java.util.*;
 public class DiagonalTrace {
 	static int[][] arr;
