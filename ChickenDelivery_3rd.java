@@ -1,9 +1,9 @@
-package ss;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 public class ChickenDelivery_3rd {
+	static final int INF = 987654321;
 	static int hCnt, cCnt,ans,N,M,Map[][];
 	static Point[] Houses;
 	static Point[] Chickens;
@@ -21,14 +21,17 @@ public class ChickenDelivery_3rd {
 				int cityDist = 0;//현재 경우의 도시거리 구한다!
 				for(int h=0;h<hCnt;h++) {
 					Point curH = Houses[h];
-					int dist = Integer.MAX_VALUE;//최솟값 갱신을 위해 큰값 셋팅
-					int tmpDist = 0;//현재 구하는 치킨거리값
-					for(int m=0;m<M;m++) {
+					int dist = INF;//최솟값 갱신을 위해 큰값 셋팅
+					//int tmpDist = 0;//현재 구하는 치킨거리값.tmpDist를 사용하는 것은 에러의 원인이 아님.
+//					for(int m=0;m<M;m++) {
+					for(int m=0;m<cCnt;m++) {
 						if((subset &(1<<m)) != 0) {
 							Point curChick = Chickens[m];
-							tmpDist = Math.abs(curH.x-curChick.x)+Math.abs(curH.y-curChick.y);
+							//tmpDist = Math.abs(curH.x-curChick.x)+Math.abs(curH.y-curChick.y);
+							
 							//dist = dist > tmpDist ? tmpDist:dist;//현재 집의 치킨거리 최소거리로 갱신!
-							dist = Math.min(dist, tmpDist);//현재 집의 치킨거리 최소거리로 갱신!
+							//dist = Math.min(dist, tmpDist);//현재 집의 치킨거리 최소거리로 갱신!
+							dist = Math.min(dist, Math.abs(curH.x-curChick.x)+Math.abs(curH.y-curChick.y));
 						}
 					}
 					cityDist += dist;//hCnt개 집마다 치킨거리(최소) 구해서 cityDist에 더해준다!
@@ -63,19 +66,8 @@ public class ChickenDelivery_3rd {
 				}
 			}
 		}
-		ans = Integer.MAX_VALUE;
+		ans = INF;//최솟값 도출을 위해 큰값으로 셋팅.
 		solve();
 		System.out.println(ans);
 	}
-
 }
-
-//		int k=21;//10101
-//		int k2=7;//10101
-//		System.out.println(cntOne(k2));
-//		for(int i=0;i<N;i++) {
-//			for(int j=0;j<N;j++) {
-//				System.out.print(Map[i][j]+ " ");
-//			}
-//			System.out.println();
-//		}
