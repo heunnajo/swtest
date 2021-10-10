@@ -34,14 +34,19 @@ public class DessertCafe {
 		if(dir == 4) return;
 		if(x<=sx) return;//현재 x가 감소하는 구간에서 백트랙킹:초기실행에서는 해당X.
 		
+        //이동전 현재 위치  방문처리
+        visited[Map[x][y]] = true;
+        
 		//이동처리
 		x += dx[dir]; y+=dy[dir];
 		if(isOut(x,y)) return;
 		if(visited[Map[x][y]]) return;//이동후 위치에 대해 백트랙킹
 		
 		//2.현재 경우 선택, 3.다음 경우 호출
+        visited[Map[x][y]] = true;
 		dfs(sx,sy,x,y,dir,cnt+1,first);
 		dfs(sx,sy,x,y,dir+1,cnt+1,first);
+        visited[Map[x][y]] = false;
 	}
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
