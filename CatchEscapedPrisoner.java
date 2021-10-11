@@ -1,5 +1,4 @@
 package ss;
-import java.awt.*;//실제 셤장에서는 Point 객체 만들어서 쓰깅.
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
@@ -24,15 +23,28 @@ public class CatchEscapedPrisoner {
 			{1,3,4,5},
 			{1,3,6,7}
 	};
+	static class Point{
+		int x,y,dist;
+		Point(int x,int y){
+			this.x = x;
+			this.y = y;
+		}
+		Point(int x,int y,int dist){
+			this.x = x;
+			this.y = y;
+			this.dist = dist;
+		}
+	}
 	static void bfs() {
 		Queue<Point> q = new LinkedList<>();
 		boolean[][] visited = new boolean[N][M];
-		q.add(new Point(R,C));
+		q.add(new Point(R,C,1));
 		visited[R][C] = true;
 		Time[R][C] = 1;
 		
 		while(!q.isEmpty()) {
 			Point cur = q.remove();
+			if(cur.dist == L+1) return;
 			int curTernal = Map[cur.x][cur.y];
 			int[] list = Ternal[curTernal];//현재 파이프 모양으로 가능한 이동방향!
 			for(int j=0;j<list.length;j++) {//모든 방향에 대해 다 도는 게 아님!
@@ -44,7 +56,7 @@ public class CatchEscapedPrisoner {
 				if(visited[nx][ny]||Map[nx][ny]==0) continue;
 				
 				if(checkPossible(nd,Map[nx][ny])) {
-					q.add(new Point(nx,ny));
+					q.add(new Point(nx,ny,cur.dist+1));
 					if(Time[nx][ny] == 0 || Time[nx][ny]>Time[cur.x][cur.y]+1) {
 						Time[nx][ny] = Time[cur.x][cur.y]+1;//최솟값을 지킨다!
 					}
