@@ -3,7 +3,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 public class DessertCafe {
-	static final int INF = Integer.MAX_VALUE;
+	static final int INF = 987654321;
 	static int ans,N,Map[][];
 	static boolean[] visited;
 	static int[] dx = {1,1,-1,-1};
@@ -18,35 +18,41 @@ public class DessertCafe {
 		for(int i=0;i<N;i++) {
 			for(int j=0;j<N;j++) {
 				initV();
-				dfs(i,j,i,j,0,0,true);
+				//System.out.println("=====================================");
+				//System.out.printf("(%d,%d) 탐색시작!현재의 dir cnt first",i,j);
+				//System.out.println();
+				dfs(i,j,i,j,0,0);
 			}
 		}
 	}
-	static void dfs(int sx,int sy,int x,int y,int dir,int cnt,boolean first) {
+	static void dfs(int sx,int sy,int x,int y,int dir,int cnt) {
 		//1.재귀 종료 조건
 		//1-1.정답 찾은 경우:초기 실행에는 아래 if문 실행X. 초기에만 호출시 true 넘겨주고 바로 false로 바꾼다.
-		if(!first && x== sx && y == sy) {
-			ans = Math.max(ans, cnt);
+		//System.out.println("                   "+dir+"  "+cnt+"   "+first);
+		//System.out.println("이동 전: "+ x+" "+y);
+		//이동 전 위치와 방향에 대해 처리
+		visited[Map[x][y]] = true;//리턴할 때 리턴하더라도 재방문 방지를 위해 먼저 true로 마킹!
+		if(dir == 4) return;
+		x += dx[dir]; y+=dy[dir];
+		//이동 후 바로 정답 판단
+		if(x== sx && y == sy) {
+			//System.out.println("cnt: "+cnt);
+			ans = Math.max(ans, cnt);//ans는 최댓값 갱신이 되야함.
 			return;
 		}
-		first = false;//초기 실행 이후 first는 false라서 초기 위치값과 동일한 위치로 오게 되면 그 때의 cnt출력해야하는데!
 		//1-2.불가능한 경우
-		if(dir == 4) return;
-		if(x<=sx) return;//현재 x가 감소하는 구간에서 백트랙킹:초기실행에서는 해당X.
-		
-        //이동전 현재 위치  방문처리
-        visited[Map[x][y]] = true;
-        
-		//이동처리
-		x += dx[dir]; y+=dy[dir];
 		if(isOut(x,y)) return;
-		if(visited[Map[x][y]]) return;//이동후 위치에 대해 백트랙킹
+		if(visited[Map[x][y]]) return;
+		if(x<sx) return;//현재 x가 감소하는 구간에서 백트랙킹:초기실행에서는 해당X.
+		//이동처리
+		//System.out.println("이동 후: "+ x+" "+y);
+		//if(visited[Map[x][y]]) return;//이동후 위치에 대해 백트랙킹X. 이동후 위치가 true여도 된다!시작점일 수 있다!이미 이부분은 위에 있다!
 		
 		//2.현재 경우 선택, 3.다음 경우 호출
-        visited[Map[x][y]] = true;
-		dfs(sx,sy,x,y,dir,cnt+1,first);
-		dfs(sx,sy,x,y,dir+1,cnt+1,first);
-        visited[Map[x][y]] = false;
+		visited[Map[x][y]] = true;
+		dfs(sx,sy,x,y,dir,cnt+1);
+		dfs(sx,sy,x,y,dir+1,cnt+1);
+		visited[Map[x][y]]  = false;
 	}
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -65,9 +71,9 @@ public class DessertCafe {
 					Map[i][j] = Integer.parseInt(st.nextToken());
 				}
 			}
-			ans = -1;//최댓값 찾기 위해 작은 값을 넣는다. 못 찾는 경우 -1을 출력해야함.
+			ans = -1;
 			solve();
-			//if(ans == INF) ans = -1;//solve 했는데도 INF로 남아있다면 -1을 정답으로 출력!
+			//if(ans == INF) ans = -1;
 			sb.append("#"+t+" "+ans+"\n");
 		}
 		System.out.print(sb);
