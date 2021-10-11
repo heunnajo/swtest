@@ -1,10 +1,11 @@
+package ss;
 import java.awt.*;//실제 셤장에서는 Point 객체 만들어서 쓰깅.
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
-public class CatchEscapedPrisoner{
+public class CatchEscapedPrisoner {
 	static int ans,N,M,R,C,L,Map[][],Time[][];//N세로=행,M가로=열,맨홀 뚜경위치 R,C:idx 0부터 시작.
 	static int[] dx = {-1,1,0,0};
 	static int[] dy = {0,0,-1,1};
@@ -33,12 +34,16 @@ public class CatchEscapedPrisoner{
 		while(!q.isEmpty()) {
 			Point cur = q.remove();
 			int curTernal = Map[cur.x][cur.y];
-			for(int d=0;d<Ternal[curTernal].length;d++) {//모든 방향에 대해 다 도는 게 아님!
-				int nx = cur.x+dx[Ternal[curTernal][d]],ny = cur.y+dy[Ternal[curTernal][d]];
+			int[] list = Ternal[curTernal];//현재 파이프 모양으로 가능한 이동방향!
+			for(int j=0;j<list.length;j++) {//모든 방향에 대해 다 도는 게 아님!
+				int nd = list[j];//현재 방향
+				int nx = cur.x+dx[nd];
+				int ny = cur.y+dy[nd];
+				
 				if(isOut(nx,ny)) continue;
 				if(visited[nx][ny]||Map[nx][ny]==0) continue;
-				//다음 이동하는 조건 판단 구현!
-				if(checkPossible(Ternal[curTernal][d],Map[nx][ny])) {
+				
+				if(checkPossible(nd,Map[nx][ny])) {
 					q.add(new Point(nx,ny));
 					if(Time[nx][ny] == 0 || Time[nx][ny]>Time[cur.x][cur.y]+1) {
 						Time[nx][ny] = Time[cur.x][cur.y]+1;//최솟값을 지킨다!
@@ -90,9 +95,19 @@ public class CatchEscapedPrisoner{
 				}
 			}
 			bfs();
+			//print();
 			countVisited();
 			sb.append("#"+t+" "+ans+"\n");
 		}
 		System.out.print(sb);
+	}
+	static void print() {
+		for(int i=0;i<N;i++) {
+			for(int j=0;j<M;j++) {
+				System.out.print(Time[i][j]+" ");
+			}
+			System.out.println();
+		}
+		
 	}
 }
