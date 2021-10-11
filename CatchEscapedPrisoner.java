@@ -1,14 +1,28 @@
-package ss;
 import java.awt.*;//실제 셤장에서는 Point 객체 만들어서 쓰깅.
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
-public class CatchEscapedPrisoner {
+public class CatchEscapedPrisoner{
 	static int ans,N,M,R,C,L,Map[][],Time[][];//N세로=행,M가로=열,맨홀 뚜경위치 R,C:idx 0부터 시작.
 	static int[] dx = {-1,1,0,0};
 	static int[] dy = {0,0,-1,1};
+	static int[][] Ternal = {{-100},
+			{0,1,2,3},
+			{0,1},
+			{2,3},
+			{0,3},
+			{1,3},
+			{1,2},
+			{0,2}
+	};
+	static int[][] Possible = {//존재유무만 판단하기 때문에 순서는 상관없음.
+			{1,2,5,6},
+			{1,2,4,7},
+			{1,3,4,5},
+			{1,3,6,7}
+	};
 	static void bfs() {
 		Queue<Point> q = new LinkedList<>();
 		boolean[][] visited = new boolean[N][M];
@@ -18,21 +32,38 @@ public class CatchEscapedPrisoner {
 		
 		while(!q.isEmpty()) {
 			Point cur = q.remove();
-			
-			for(int dir=0;dir<4;dir++) {
-				int nx = cur.x+dx[dir],ny = cur.y+dy[dir];
+			int curTernal = Map[cur.x][cur.y];
+			for(int d=0;d<Ternal[curTernal].length;d++) {//모든 방향에 대해 다 도는 게 아님!
+				int nx = cur.x+dx[Ternal[curTernal][d]],ny = cur.y+dy[Ternal[curTernal][d]];
 				if(isOut(nx,ny)) continue;
-				if(visited[nx][ny]) continue;
+				if(visited[nx][ny]||Map[nx][ny]==0) continue;
 				//다음 이동하는 조건 판단 구현!
-				q.add(new Point(nx,ny));
-				Time[nx][ny] = Time[cur.x][cur.y]+1;
-				visited[nx][ny] = true;
+				if(checkPossible(Ternal[curTernal][d],Map[nx][ny])) {
+					q.add(new Point(nx,ny));
+					if(Time[nx][ny] == 0 || Time[nx][ny]>Time[cur.x][cur.y]+1) {
+						Time[nx][ny] = Time[cur.x][cur.y]+1;//최솟값을 지킨다!
+					}
+					visited[nx][ny] = true;
+				}
 			}
 		}
 		
 	}
+	static boolean checkPossible(int dir,int next) {
+		for(int j=0;j<4;j++) {
+			if(Possible[dir][j] == next) return true;
+		}
+		return false;
+	}
 	static boolean isOut(int x,int y) {
 		return x<0 || x>N-1 || y<0 || y>M-1;
+	}
+	static void countVisited() {
+		int sum = 0;
+		for(int i=0;i<N;i++)
+			for(int j=0;j<M;j++)
+				if(Time[i][j]>0 && Time[i][j]<=L) sum++;
+		ans = sum;
 	}
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -59,15 +90,9 @@ public class CatchEscapedPrisoner {
 				}
 			}
 			bfs();
+			countVisited();
 			sb.append("#"+t+" "+ans+"\n");
 		}
+		System.out.print(sb);
 	}
-
 }
-
-//			for(int i=0;i<N;i++) {
-//				for(int j=0;j<M;j++) {
-//					System.out.print(Map[i][j]+" ");
-//				}
-//				System.out.println();
-//			}
