@@ -1,4 +1,3 @@
-package ss;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
@@ -18,37 +17,21 @@ public class DessertCafe {
 		for(int i=0;i<N;i++) {
 			for(int j=0;j<N;j++) {
 				initV();
-				//System.out.println("=====================================");
-				//System.out.printf("(%d,%d) 탐색시작!현재의 dir cnt first",i,j);
-				//System.out.println();
-				dfs(i,j,i,j,0,0);
+				dfs(i,j,i,j,0,1);
 			}
 		}
 	}
 	static void dfs(int sx,int sy,int x,int y,int dir,int cnt) {
-		//1.재귀 종료 조건
-		//1-1.정답 찾은 경우:초기 실행에는 아래 if문 실행X. 초기에만 호출시 true 넘겨주고 바로 false로 바꾼다.
-		//System.out.println("                   "+dir+"  "+cnt+"   "+first);
-		//System.out.println("이동 전: "+ x+" "+y);
-		//이동 전 위치와 방향에 대해 처리
 		visited[Map[x][y]] = true;//리턴할 때 리턴하더라도 재방문 방지를 위해 먼저 true로 마킹!
 		if(dir == 4) return;
 		x += dx[dir]; y+=dy[dir];
-		//이동 후 바로 정답 판단
 		if(x== sx && y == sy) {
-			//System.out.println("cnt: "+cnt);
 			ans = Math.max(ans, cnt);//ans는 최댓값 갱신이 되야함.
 			return;
 		}
-		//1-2.불가능한 경우
 		if(isOut(x,y)) return;
 		if(visited[Map[x][y]]) return;
 		if(x<sx) return;//현재 x가 감소하는 구간에서 백트랙킹:초기실행에서는 해당X.
-		//이동처리
-		//System.out.println("이동 후: "+ x+" "+y);
-		//if(visited[Map[x][y]]) return;//이동후 위치에 대해 백트랙킹X. 이동후 위치가 true여도 된다!시작점일 수 있다!이미 이부분은 위에 있다!
-		
-		//2.현재 경우 선택, 3.다음 경우 호출
 		visited[Map[x][y]] = true;
 		dfs(sx,sy,x,y,dir,cnt+1);
 		dfs(sx,sy,x,y,dir+1,cnt+1);
@@ -73,17 +56,8 @@ public class DessertCafe {
 			}
 			ans = -1;
 			solve();
-			//if(ans == INF) ans = -1;
 			sb.append("#"+t+" "+ans+"\n");
 		}
 		System.out.print(sb);
 	}
-
 }
-
-//			for(int i=0;i<N;i++) {
-//				for(int j=0;j<N;j++) {
-//					System.out.print(Map[i][j]+" ");
-//				}
-//				System.out.println();
-//			}
