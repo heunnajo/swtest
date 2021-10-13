@@ -83,7 +83,7 @@ public class WirelessCharge_2nd {
 		//재귀 종료 : 사용자 A,B모두 BC 선택한 경우!
 		if(uid==2) {
 			tmpMax = Math.max(tmpMax, sum);
-			System.out.println("tmpMax: "+tmpMax);
+			//System.out.println("tmpMax: "+tmpMax);
 			return;
 		}
 		for(int i=0;i<A;i++) {
