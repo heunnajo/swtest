@@ -1,4 +1,3 @@
-package ss;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
@@ -10,7 +9,6 @@ public class CrashBrick_3rd {
 	static int[] selected;
 	static int[] dx = {-1,1,0,0};
 	static int[] dy = {0,0,-1,1};
-	static boolean[][] visited;
 	static class Point{
 		int x,y,range;
 		Point(int x,int y,int range){
@@ -38,20 +36,12 @@ public class CrashBrick_3rd {
 			selected = new int[N];
 			ans = INF;
 			
-			//int cnt=0;
 			for(int i=0;i<H;i++) {
 				st = new StringTokenizer(br.readLine());
 				for(int j=0;j<W;j++) {
 					Map[i][j] = Integer.parseInt(st.nextToken());
-					//if(Map[i][j]>0) cnt++;
 				}
 			}
-//			if(cnt <= N) {//벽돌 갯수가 N개 이하이면 탐색하지 않고 정답은 바로 0. 
-//				sb.append("#"+t+" "+0+"\n");
-//				continue;
-//			}
-			
-			//tmpMap = copyMap();//연산하기 전에 배열 복사해서 써야함!:N개 열 선택한 후, 벽돌 깨기 BFS할 때!
 			solve(0);
 			sb.append("#"+t+" "+ans+"\n");
 		}
@@ -62,7 +52,6 @@ public class CrashBrick_3rd {
 			int[][] copy = copyMap();
 			int sum = 0;//각 경우마다 남은 벽돌의 갯수 저장.
 			for(int j=0;j<N;j++) {//디버깅 후 N으로 수정!
-				visited = new boolean[H][W];
 				BFS(copy,selected[j]);//선택한 열j마다 BFS로 벽돌제거
 				down(copy);
 			}
@@ -86,14 +75,9 @@ public class CrashBrick_3rd {
 		Queue<Integer> q = new LinkedList<>();
 		for(int j=0;j<W;j++) {
 			for(int i=H-1;i>=0;i--) {
-//				if(copy[i][j] != 0) q.add(copy[i][j]);
 				if(copy[i][j] > 0) q.add(copy[i][j]);
 			}
 			for(int i=H-1;i>=0;i--) {
-//				while(!q.isEmpty()) {
-//					copy[i][j] = q.remove();
-//				}
-//				copy[i][j] = 0;
 				if(!q.isEmpty()) {
 					copy[i][j] = q.remove();
 				} else copy[i][j] = 0;
@@ -102,13 +86,13 @@ public class CrashBrick_3rd {
 	}
 	static void BFS(int[][] copy,int j) {
 		Queue<Point> q = new LinkedList<>();//BFS에 쓰이는 큐 여기서 생성했는데 이외에 다른 곳에서도 필요한가?
-		//boolean[][] visited = new boolean[H][W];//정답코드에서는 BFS 밖에 만듦.
+		boolean[][] visited = new boolean[H][W];//정답코드에서는 BFS 밖에 만듦.
 		//벽돌이 있는가장 첫번째 행을 찾는다:BFS 탐색의 시작점이 된다!
 		for(int i=0;i<H;i++) {
 			if(copy[i][j]>0) {
 				q.add(new Point(i,j,copy[i][j]));
-				//visited[i][j] = true;
-				//copy[i][j] = 0;
+				visited[i][j] = true;
+				copy[i][j] = 0;
 				break;//찾았으면 반복문 탈출!
 			}
 		}
