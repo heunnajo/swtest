@@ -23,12 +23,12 @@ class EscapeMaze_Solution {
             HashMap<Integer,Boolean> trapped = new HashMap<>();//함정이 발동된 노드는 value=true;
             //함정에 해당하는 비트를 먼저 만든다.
             for(int i=0;i<traps.length;++i){
-                int bit = 1<<i;//0:왼쪽으로 0번 시프트, 1:왼쪽으로 1번 시프트,... 그러면ㄴ 함정에 해당하는 비트가 1로 켜진다?! 2,3이 함정비트일 때, 이 2, 3 노드 번호와는 상관없이 인덱스이자 반복변수인 i값에 따라 비트가 켜지도록?!
+                int bit = 1<<i;//0:왼쪽으로 0번 시프트, 1:왼쪽으로 1번 시프트,... 그러면 함정에 해당하는 비트가 1로 켜진다! 2,3이 함정비트일 때, 이 2, 3 노드 번호와는 상관없이 인덱스이자 반복변수인 i값에 따라 비트가 켜지도록?!
                 if((state & bit)!= 0) {//0이 아니라는 건 그 비트가 켜져있다는 뜻.
                      //현재 도착한 노드가 비트가 켜진 함정 노드라면 다시 반전시킨다(원래대로 돌아가야함) 
                     //즉, 현재 함정 발동되있는데 다시 온것을 의미=>이 때는 해당 비트 꺼줘야함
                     if(traps[i] ==u) {//비트를 끄는 방법은 비트 반전시킨다음 &연산하면 된다.
-                        state &= ~bit;//~bit는ㄴ 해당 비트만 0이다. 따라서 현재 상태 state와 &연산하면 해당 비트만 0이 된다.
+                        state &= ~bit;//~bit는 해당 비트만 0이다. 따라서 현재 상태 state와 &연산하면 해당 비트만 0이 된다.
                     } else{//아니라면 반전 시킬 필요없음
                         trapped.put(traps[i],true);
                     }
@@ -50,7 +50,7 @@ class EscapeMaze_Solution {
                     if(Graph[u][v] != INF)
                         pq.add(new int[]{v,w+Graph[u][v],state});
                 } else{//두개가 다르면 반전된 간선 정보를 이용
-                    if(Graph[u][v] != INF)
+                    if(Graph[v][u] != INF)
                         pq.add(new int[]{v,w+Graph[v][u],state});
                 }
             }
