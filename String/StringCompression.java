@@ -21,7 +21,7 @@ class StringCompression {
                     else{
                         counting[j-x*cnt] = cnt;
                         start = isSame[j];
-                        cnt =. 1;
+                        cnt = 1;
                     }
                 }
             }
