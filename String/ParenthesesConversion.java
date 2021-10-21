@@ -1,6 +1,6 @@
 import java.util.*;
 
-class ParenthesesConversion {
+class ParenthesesConversion_Solution {
     int pos;
     boolean isCorrect(String str){
         boolean ret = true;
