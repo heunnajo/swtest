@@ -39,6 +39,9 @@ class StringCompression {
             String ans = finalS.toString();
             int answer = 2000;
             answer = Math.min(answer,ans.length());
-            return answer;
+            
     }
+    return answer;
 }
+
+}//전체 클래스
