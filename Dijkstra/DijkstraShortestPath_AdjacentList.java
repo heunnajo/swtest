@@ -1,4 +1,4 @@
-package ss;
+package Dijkstra;
 import java.io.*;
 import java.util.*;
 public class DijkstraShortestPath_AdjacentList {
