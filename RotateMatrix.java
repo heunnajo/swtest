@@ -19,8 +19,8 @@ class RotateMatrix{
     private static int[][] rotateImage(int[][] image){
         int tmp;
         for(int s=0,e=image.length-1;s<e;s++,e--){
-            for(int i=s,j=e;i<e;i++j--){
-                tmp = image[s][i]
+            for(int i=s,j=e;i<e;i++,j--){
+                tmp = image[s][i];
                 image[s][i] = image[i][e];
                 image[i][e] = image[e][j];
                 image[e][j] = image[j][s];
