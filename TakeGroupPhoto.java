@@ -1,22 +1,40 @@
+import java.util.*;
 class TakeGroupPhoto {
-    go(int index,int prev){
-        if(index==9){
-            ans++;
+    static int ans;
+    static boolean[] visited;
+    static String[] friends = {"X","A","C","F","J","M","N","R","T"};
+    static String[] condition;
+    static boolean satisfy(String permu){
+        for(String con:condition){
+            int a_idx = permu.indexOf(con.charAt(0));
+            int b_idx = permu.indexOf(con.charAt(2));
+            //부등호 정보, 상수값 조회해서 조건 판단!
+            if((con.charAt(3) == '=') && (Math.abs(a_idx-b_idx)-1) != con.charAt(4)-'0') return false;
+            if((con.charAt(3) == '<') && (Math.abs(a_idx-b_idx)-1) >= con.charAt(4)-'0') return false;
+            if((con.charAt(3) == '>') && (Math.abs(a_idx-b_idx)-1) <= con.charAt(4)-'0') return false;
+        }
+        return true;
+    }
+    static void go(int index,StringBuilder sb){
+        if(index == 8){
+            if(satisfy(sb.toString())) ans++;
             return;
         }
         for(int i=1;i<=8;i++){
-            if(used[i])continue;
-            //갈등 정보 확인, 갈등 정보에 따라 현재 index번째 프렌즈를 선택!
-            if(){..}
-            used[i] = true;
-            selected[index] = i;
-            go(index+1,i);
-            used[i] = false;
-            selected[index] = -1;//배열값을 덮어쓰는 거라 굳이 안해줘도되지만 원복을 명시적으로 표현하기 위해.
+            if(visited[i]) continue;
+            StringBuilder ab = new StringBuilder(sb.toString());
+            ab.append(friends[i]);
+            visited[i] = true;
+            go(index+1,ab);
+            visited[i] = false;//원복 필수!!
         }
     }
     public int solution(int n, String[] data) {
-        int answer = 0;
-        return answer;
+        condition = data;
+        StringBuilder sb = new StringBuilder();
+        visited = new boolean[9];
+        ans = 0;
+        go(0,sb);
+        return ans;
     }
 }
