@@ -25,25 +25,27 @@ public class FindCross {
 		//그리고 그 때의 x,y,l=> i,j,l을 각 배열리스트에 저장!
 		for(int i=0;i<n;i++) {
 			for(int j=0;j<m;j++) {
-				int l=0;
-				for(int k=1;;k++) {
-					if(i-k>=0 && i+k<n && j-k>=0 && j+k<m) {
-						if(map[i-k][j]=='*' && map[i+k][j] =='*' && map[i][j-k]=='*'&& map[i][j+k]=='*') {
-							l=k;
-						} else break;//현재 크기가 k인 십자가에서 조건을 만족하지 않는다면 십자가 크기가 더 커지더라도 조건 만족X
-					} else break;//범위 벗어나면 바로 현재 반복문 종료(더 반복할 필요 없음)
-				}
-				if(l>0) {//십자가를 그릴 수 있다! : 1부터 l크기 만큼 십자가를 놔야쥬.
-					//현재 (i,j)에서 십자가 놓을 수 있다면 각 배열리스트에 추가해야한다.
-					x_idx.add(i);
-					y_idx.add(j);
-					l_size.add(l);
-					check[i][j] = true;
-					for(int k=1;k<l;k++) {
-						check[i-k][j] = true;
-						check[i+k][j] = true;
-						check[i][j-k] = true;
-						check[i][j+k] = true;
+				if(map[i][j] == '*') {//십자가를 놓으려고 하기 전에, 십자가 중심(i,j)부터 *인지 검사해야함!!!
+					int l=0;
+					for(int k=1;;k++) {
+						if(i-k>=0 && i+k<n && j-k>=0 && j+k<m) {
+							if(map[i-k][j]=='*' && map[i+k][j] =='*' && map[i][j-k]=='*'&& map[i][j+k]=='*') {
+								l=k;
+							} else break;//현재 크기가 k인 십자가에서 조건을 만족하지 않는다면 십자가 크기가 더 커지더라도 조건 만족X
+						} else break;//범위 벗어나면 바로 현재 반복문 종료(더 반복할 필요 없음)
+					}
+					if(l>0) {//십자가를 그릴 수 있다! : 1부터 l크기 만큼 십자가를 놔야쥬.
+						//현재 (i,j)에서 십자가 놓을 수 있다면 각 배열리스트에 추가해야한다.
+						x_idx.add(i+1);
+						y_idx.add(j+1);
+						l_size.add(l);
+						check[i][j] = true;
+						for(int k=1;k<=l;k++) {
+							check[i-k][j] = true;
+							check[i+k][j] = true;
+							check[i][j-k] = true;
+							check[i][j+k] = true;
+						}
 					}
 				}
 			}
@@ -56,21 +58,15 @@ public class FindCross {
 				}
 			}
 		}
+		System.out.println(x_idx.size());
 		for(int i=0;i<x_idx.size();i++) {
-			int x = x_idx.remove(i);
-			int y = y_idx.remove(i);
-			int size = l_size.remove(i);
+			int x = x_idx.get(i);
+			int y = y_idx.get(i);
+			int size = l_size.get(i);
 			
-			System.out.println(x_idx.size());
 			System.out.println(x+" "+y+" "+size);
 		}
 		
 	}
 
 }
-//for(int i=0;i<n;i++) {
-//	for(int j=0;j<m;j++) {
-//		System.out.print(map[i][j]+" ");
-//	}
-//	System.out.println();
-//}
