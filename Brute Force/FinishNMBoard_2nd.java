@@ -53,19 +53,9 @@ public class FinishNMBoard_2nd {
 		}
 		for(int dir=0;dir<4;dir++) {
 			int nx = x,ny = y;
-			
-//			nx += dx[dir]; ny += dy[dir];//스택오버플로우 
-//			while(isIn(nx,ny) && !visited[nx][ny] && Board[nx][ny] == '.') {
-//				nx += dx[dir]; ny += dy[dir];
-//				visited[nx][ny] = true; cnt--;
-//			}
-//			System.out.printf("이동 전 (nx,ny): (%d,%d) ",nx,ny);
-//			System.out.println();
-//			System.out.println("nx: "+nx+"ny: "+ny);
 			while(true) {
 				nx += dx[dir]; ny += dy[dir];
 				if(isOut(nx,ny)) break;
-//				System.out.println("nx: "+nx+"ny: "+ny);
 				if(Board[nx][ny]=='*') break;
 				if(visited[nx][ny])break;
 				
@@ -88,5 +78,4 @@ public class FinishNMBoard_2nd {
 	static boolean isIn(int x,int y) {
 		return x>= 0 && x<N && y>=0 && y<M;
 	}
-
 }
