@@ -9,14 +9,10 @@ public class FinishNMBoard {
 	static int[] dy = {0,0,-1,1};
 	
 	public static void main(String[] args) throws Exception{
-//		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-//		StringTokenizer st = null;
-//		StringTokenizer st = new StringTokenizer(br.readLine());
 		Scanner sc = new Scanner(System.in);
 		StringBuilder sb = new StringBuilder();
 		
 		int tc = 1;
-//		while(st.hasMoreTokens()) {
 		while(sc.hasNextInt()) {
 			N = sc.nextInt();
 			M = sc.nextInt();
