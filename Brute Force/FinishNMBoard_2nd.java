@@ -1,4 +1,3 @@
-package ss;
 import java.io.*;
 import java.util.*;
 public class FinishNMBoard_2nd {
@@ -32,9 +31,9 @@ public class FinishNMBoard_2nd {
 			for(int i=0;i<N;i++) {
 				for(int j=0;j<M;j++) {
 					if(Board[i][j] == '.') {
-						visited[i][j] = true;//시작점 방문체크해주고 
+						visited[i][j] = true;cnt--;//시작점 방문체크해주고 
 						go(i,j,0);
-						visited[i][j] = false;//돌고난 후에는 다음 탐색을 위해 방문체크 원복 
+						visited[i][j] = false;cnt++;//돌고난 후에는 다음 탐색을 위해 방문체크 원복 
 					}
 				}
 			}
@@ -67,8 +66,8 @@ public class FinishNMBoard_2nd {
 			
 			go(nx,ny,move+1);//다음 경우 호출
 			while(!(nx==x && ny== y)) {//원복
-				nx -= dx[dir]; ny -= dy[dir];
 				visited[nx][ny] = false; cnt++;
+				nx -= dx[dir]; ny -= dy[dir];
 			}
 		}
 	}
