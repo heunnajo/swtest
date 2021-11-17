@@ -48,27 +48,29 @@ public class Baaduk2_Easy {
 			for(int j=0;j<M;j++) {
 				if(Map[i][j] == 2 && !visited[i][j]) {
 					//현위치(i,j) 기준으로 탐색!
+					boolean dead = true;//현재 위치에서 죽은 그룹:true로 시작.
 					q.add(i); q.add(j);
 					visited[i][j] = true;
 					int cnt = 1;
-					boolean dead = true;
 					while(!q.isEmpty()) {
 						int x = q.remove();
 						int y = q.remove();
 						
 						for(int d=0;d<4;d++) {
 							int nx = x+dx[d]; int ny = y+dy[d];
-							if(isOut(nx,ny) ||visited[nx][ny]) continue;
+//							if(isOut(nx,ny) ||visited[nx][ny]) continue;
+							if(isOut(nx,ny)) continue;
 							
 							if(Map[nx][ny] == 0) dead = false;
-							else {
+							else if(Map[nx][ny] == 2 && !visited[nx][ny]) {
 								cnt++;
 								q.add(nx); q.add(ny);
 								visited[nx][ny] = true;
 							}
 						}
 					}
-					if(dead) sum = sum<cnt? cnt:sum;
+//					if(dead) sum = sum<cnt? cnt:sum;
+					if(dead) sum += cnt;
 				}
 			}
 		}
