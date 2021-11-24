@@ -1,9 +1,8 @@
-package ss;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 public class RockScissorsPaper {
-	static int N,K,Map[][],win[],index[],round[][];
+	static int N,K,Map[][],round[][];//win과 index는 로컬로!
 	static boolean flag,check[];
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -14,13 +13,12 @@ public class RockScissorsPaper {
 		K = Integer.parseInt(st.nextToken());
 		
 		Map = new int[N+1][N+1];
-		win = new int[4];
-		index = new int[4];
 		round = new int[4][21];
+		check = new boolean[N+1];
 		
-		for(int i=1;i<=3;i++) {
+		for(int i=1;i<=N;i++) {
 			st = new StringTokenizer(br.readLine());
-			for(int j=1;j<=3;j++) {
+			for(int j=1;j<=N;j++) {
 				Map[i][j] = Integer.parseInt(st.nextToken());
 			}
 		}
@@ -37,39 +35,44 @@ public class RockScissorsPaper {
 		else System.out.println(0);
 	}
 	static void perm(int index) {//개선 가능.오답 풀이 정리할 때 정리하기.
-		if(index == 21) {
+		if(flag)return;//기 진행한 경기에서 이미 flag가 true처리 됐다면 바로 리턴!
+		if(index == N+1) {
 			game();
 			return;
 		}
 		//현재 순서 정한다!
-		for(int i=1;i<=20;i++) {
+		for(int i=1;i<=N;i++) {
 			if(!check[i]) {
 				check[i] = true;
 				round[1][index] = i;
 				perm(index+1);
 				check[i] = false;
-				round[1][index] = -1;
+				round[1][index] = -1;//굳이 없어도 되지만 형식상~~
 			}
 		}
 	}
 	static void game() {
+		int index[] = new int[4];
 		for(int i=1;i<=3;i++) {
 			index[i] = 1;
 		}
-		int p1 = 1,p2 = 2,p3 = 3;
+		int p1 = 1,p2 = 2,np = 3;
+		int win[] = new int[4];
 		while(true) {
 			//종료 조건
 			//1.지우(=1)가 K번 이기는 경우  
-			int np = 6-(p1+p2);//다음 선수 먼조 조회해놓는다!
+			np = 6-(p1+p2);//다음 선수 먼조 조회해놓는다!
 			if(win[1] == K) {
 				flag = true; return;
 			}
-			else if(win[2] == K || win[3] == K) return;//2.다른 선수들이 K번 이기는 경
-			if(index[1] == 20 || index[2] == 20 || index[3] == 20) return;//20번 경기 다 한 경우
+			if(win[2] == K || win[3] == K) return;//2.다른 선수들이 K번 이기는 경우:else 생략?!
+			if(index[1] == N+1) return;
+			if(index[2] == 21 || index[3] == 21) return;//20번 경기 다 한 경우
 			//본격  현재 경기!
 			int cmd1 = round[p1][index[p1]];
 			int cmd2 = round[p2][index[p2]];
 			int winner = checkWinner(cmd1,cmd2,p1,p2);
+			win[winner]++; index[p1]++; index[p2]++;//이긴자의 승수 증가, 선수1,선수2의 경기 수 증가!(손동작 정보 조회 위히!)
 			//np 코드가 여기 와도 될 것 같은디!
 			p1 = winner;p2 = np;
 		}
@@ -84,16 +87,3 @@ public class RockScissorsPaper {
 		else return p2;
 	}
 }
-
-//		for(int i=2;i<=3;i++) {
-//			for(int j=1;j<=20;j++) {
-//				System.out.print(round[i][j]+" ");
-//			}
-//			System.out.println();
-//		}
-//		for(int i=1;i<=3;i++) {
-//			for(int j=1;j<=3;j++) {
-//				System.out.print(Map[i][j]+" ");
-//			}
-//			System.out.println();
-//		}
