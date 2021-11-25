@@ -1,5 +1,5 @@
 import java.util.*;
-class CheckSocialDistance_BFS_2nd {
+class CheckSocialDistance_BFS_2nd_wrong {
     static int[] dx = {-1,1,0,0};
     static int[] dy = {0,0,-1,1};
     static class Point{
