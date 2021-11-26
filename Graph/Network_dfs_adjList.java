@@ -1,5 +1,5 @@
 import java.util.*;
-class Network {
+class Network_dfs_adjList {
     static boolean[] visited;
     static ArrayList<Integer>[] list;
     public int solution(int n, int[][] computers) {
