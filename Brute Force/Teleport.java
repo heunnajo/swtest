@@ -31,13 +31,14 @@ public class Teleport {
 			int b = Integer.parseInt(st.nextToken())-1;
 			sb.append(getTime(a,b)+"\n");
 		}
-		System.out.print(sb);
+		//System.out.print(sb);
 	}
 	static int getTime(int a,int b) {
 		int sa = cityInfo[a][0], sb = cityInfo[b][0];
-		int dist = 0;
+//		int dist = 0;
+		int dist = getBetween(a,b);;
 		if(sa==1 && sb==1) {
-			dist = getBetween(a,b);
+			return dist;
 		} else if(sa == 1) {
 			dist = T+getTele(b);
 		} else if(sb == 1) {
@@ -45,11 +46,11 @@ public class Teleport {
 		} else {
 			dist = getTele(a)+T+getTele(b);
 		}
+		//dist = Math.min(dist, T);
 		return dist;
 	}
 	static int getBetween(int a,int b) {
-		int time = INF;
-		time = Math.abs(cityInfo[a][1]-cityInfo[b][1])+Math.abs(cityInfo[a][2]-cityInfo[b][2]);
+		int time = Math.abs(cityInfo[a][1]-cityInfo[b][1])+Math.abs(cityInfo[a][2]-cityInfo[b][2]);
 		if(cityInfo[a][0] == 1 && cityInfo[b][0]==1) {
 			time = Math.min(time, T);
 		}
@@ -64,3 +65,10 @@ public class Teleport {
 		return time;
 	}
 }
+
+//		for(int i=0;i<N;i++) {
+//			for(int j=0;j<3;j++) {
+//				System.out.print(cityInfo[i][j]+" ");
+//			}
+//			System.out.println();
+//		}
