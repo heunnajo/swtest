@@ -8,10 +8,11 @@ public class MonkeyWannabeHorse {
 	static int[] Hdx = {-1,-1,-2,-2,1,1,2,2};
 	static int[] Hdy = {-2,2,-1,1,-2,2,-1,1};
 	static class Pair{
-		int x,y,cnt;
-		Pair(int x,int y,int cnt){
+		int x,y,jump,cnt;
+		Pair(int x,int y,int jump,int cnt){
 			this.x = x;
 			this.y = y;
+			this.jump = jump;
 			this.cnt = cnt;
 		}
 	}
@@ -32,45 +33,42 @@ public class MonkeyWannabeHorse {
 				Map[i][j] = Integer.parseInt(st.nextToken());
 			}
 		}
-		if(Dist[h-1][w-1] == 0) System.out.println(-1);
-		else System.out.println(Dist[h-1][w-1]);
+		bfs();
 	}
 	static void bfs() {
 		Queue<Pair> q = new LinkedList<>();
-		boolean[][] visited = new boolean[h][w];
-		q.add(new Pair(0,0,0));
-		visited[0][0] = true;
+		boolean[][][] visited = new boolean[k+1][h][w];
+		q.add(new Pair(0,0,0,0));
+		visited[0][0][0] = true;
 		
 		while(!q.isEmpty()) {
 			Pair cur = q.remove();
+			if(cur.x == h-1 && cur.y == w-1) {
+				System.out.println(cur.cnt);
+				return;
+			}
 			for(int d=0;d<4;d++) {
 				int nx = cur.x+dx[d], ny = cur.y+dy[d];
-				if(isOut(nx,ny) && !visited[nx][ny]) {
-					visited[nx][ny] = true;
-					q.add(new Pair(nx,ny,cur.cnt));
-					Dist[nx][ny] = Dist[cur.x][cur.y]+1;
+				if(isOut(nx,ny) || visited[cur.jump][nx][ny]) continue;
+				if(Map[nx][ny] == 0) {
+					visited[cur.jump][nx][ny] = true;//말 이동횟수 변함없이 방문 체크!
+					q.add(new Pair(nx,ny,cur.jump,cur.cnt+1));
 				}
 			}
-			if(cur.cnt+1<k) {//현재 이동횟수+1이 k보다 작을 때!
+			if(cur.jump<k) {
 				for(int d=0;d<8;d++) {
 					int nx = cur.x+Hdx[d], ny = cur.y+Hdy[d];
-					if(isOut(nx,ny) && !visited[nx][ny]) {
-						visited[nx][ny] = true;
-						q.add(new Pair(nx,ny,cur.cnt+1));
-						Dist[nx][ny] = Dist[cur.x][cur.y]+1;
+					if(isOut(nx,ny) || visited[cur.jump+1][nx][ny]) continue;
+					if(Map[nx][ny] == 0) {
+						visited[cur.jump+1][nx][ny] = true;
+						q.add(new Pair(nx,ny,cur.jump+1,cur.cnt+1));
 					}
 				}
 			}
 		}
+		System.out.println(-1);
 	}
 	static boolean isOut(int x,int y) {
 		return x<0 || x>h-1 || y<0 || y>w-1;
 	}
 }
-
-//		for(int i=0;i<h;i++) {
-//			for(int j=0;j<w;j++) {
-//				System.out.print(Map[i][j]+" ");
-//			}
-//			System.out.println();
-//		}
