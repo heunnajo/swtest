@@ -1,0 +1,4 @@
+Binary Search Tree를 이용해 문제를 해결해본다.
+C++ : set, map, Java : TreeSet, TreeMap 이용
+정렬된 상태가 필요없다면
+C++ : unordered_set, unordered_map, Java : HashSet, HashMap
