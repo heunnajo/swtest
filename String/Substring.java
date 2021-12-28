@@ -1,4 +1,3 @@
-package ss;
 import java.util.*;
 import java.io.*;
 public class Substring {
@@ -6,14 +5,18 @@ public class Substring {
 	static long mod = 2147483647;
 	static long h(String s) {//문자열 s의 해시값을 리턴!
 		long ans = 0;
-		ans = ans*base + mod;
+		for(char c:s.toCharArray()) {
+			ans = (ans*base+c)%mod;
+		}
 		return ans;
 	}
 	static int match(String s,String p) {
 		int n = s.length(), m = p.length();
 		if(n<m) return 0;
 		long hash_p = h(p);
-		long hash_s = h(s);
+//		long hash_s = h(s);//?
+		long hash_s = h(s.substring(0,m));//왜 substirng을 쓰는 거임?그냥 s로 해도 되잖아
+		
 		long first = 1;
 		for(int i=0;i<m-1;i++) {
 			first = (first*base) %mod;
@@ -22,9 +25,9 @@ public class Substring {
 		for(int i=0;i<=n-m;i++) {
 			if(hash_p == hash_s) return 1;
 			if(i+m<n) {
-				hash_s = hash_s - (s.charAt(i)%mod);
+				hash_s = hash_s - (s.charAt(i)*first)%mod;
 				hash_s = (hash_s + mod)%mod;
-				hash_s = hash_s + (s.charAt(i+m)%mod);
+				hash_s = (hash_s*base)%mod + s.charAt(i+m)%mod;
 			}
 		}
 		return 0;
