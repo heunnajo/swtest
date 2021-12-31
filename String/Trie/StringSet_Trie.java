@@ -1,4 +1,4 @@
-package ss;
+package Trie;
 import java.util.*;
 import java.io.*;
 public class StringSet_Trie {
