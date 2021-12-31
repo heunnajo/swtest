@@ -1,0 +1,4 @@
+Knuth-Morris-Prett의 줄임 말이다.
+실패 함수(fail)를 이용한다.
+fail[i] = P의 i까지 부분 문자열에서 prefix == suffix가 될 수 있는 부분 문자열 중에서 가장 긴 것의 길이
+prefix가 P의 i까지 부분 문자열과 같으면 안 된다.
