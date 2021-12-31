@@ -1,7 +1,7 @@
 package ss;
 import java.util.*;
 import java.io.*;
-public class StringSet {
+public class StringSet_HashMap {
 
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
