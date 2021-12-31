@@ -1,4 +1,4 @@
-package ss;
+package Trie;
 import java.io.*;
 import java.util.*;
 
