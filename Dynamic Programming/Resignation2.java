@@ -16,7 +16,6 @@ public class Resignation2 {
 			t[i] = a; p[i] = b;
 		}
 		for(int i=1;i<=n;i++) {
-			//if(i+t[i]>n+1 || i+1>n+1) continue;
 			d[i+t[i]] = Math.max(d[i+t[i]], d[i]+p[i]);
 			d[i+1] = Math.max(d[i+1], d[i]);
 		}
