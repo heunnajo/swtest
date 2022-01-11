@@ -1,4 +1,4 @@
-class Solution {
+class ExpressAsN {
     static int answer,N,Num;
     static final int INF = 987654321;
     public int solution(int n, int number) {
@@ -11,18 +11,10 @@ class Solution {
         return answer;
     }
     static void go(int count,int sum){
-        //1.종료 조건
-        //1-1. 불가능한 경우
-        if(count>8){
-            answer = -1;
-            return;
-        }
-        //1-2. 정답 찾은 경우
+        //1.종료 조건 : 정답 찾은 경우
         if(sum == Num){
-            if(answer == -1 || answer>count){
-                answer = count;
-                return;
-            }
+            answer = Math.min(answer,count);
+            return;
         }
         //2.현재 깊이에서 선택
         //3.다음 경우 호출
