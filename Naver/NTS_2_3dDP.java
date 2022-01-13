@@ -1,6 +1,6 @@
 package ss;
 import java.util.*;
-public class NTS_2_3dDP {
+public class NTS_3_3dDP {
 
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
