@@ -1,58 +1,59 @@
-package ss;
 import java.util.*;
 import java.io.*;
 public class MatchStick {
 
-	public static void main(String[] args) throws  Exception{
+	static int N;
+	static long[] minDp;
+	static String[] maxDp;
+	static int M;
+	
+	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder sb = new StringBuilder();
-		int tc = Integer.parseInt(br.readLine());
+		N = Integer.parseInt(br.readLine());
 		
-		int[][] info = {
-				{-1},//0
-				{-1},//1
-				{1},//2
-				{7},//3
-				{4},//4
-				{2,5},//5
-				{0,6,9},//6
-				{8}//7
-				};
+		minDp = new long[101];
+		maxDp = new String[101];
 		
-		while(tc-- >0) {
-			int n = Integer.parseInt(br.readLine());
-			StringBuilder tmpMax = new StringBuilder();
-			StringBuilder tmpMin = new StringBuilder();
-			int[] curInfo = info[n];
-			int max = -1, min = -1;
-			if(n%2 == 0) {//짝수
-				if(n<=7) {
-					max = curInfo[curInfo.length-1];
-					min = curInfo[0];
-				} else {
-					for(int i=0;i<n/2;i++) tmpMax.append("1");
-					//n이 짝수, n>7인 최솟값 만드는 로직
-					tmpMin.append("10"); n-=8;
-					while(n>=6) {
-						tmpMin.append("0"); n-=6;
-					}
-					tmpMin.append(info[n][0]);
-				}
-			} else {//홀수
-				if(n<=7) {
-					max = curInfo[curInfo.length-1];
-					min = curInfo[0];
-				} else {
-					tmpMax.append("7");
-					for(int i=0;i<(n-3)/2;i++) tmpMax.append("1");
-					//n이 홀수, n>7인 최솟값 만드는 로직:여기서 막힘..!
-				}
+		Arrays.fill(minDp, Long.MAX_VALUE);
+		minDp[2]=1;
+		minDp[3]=7;
+		minDp[4]=4;
+		minDp[5]=2;
+		minDp[6]=6;
+		minDp[7]=8;
+		minDp[8]=10;
+		
+		String[] add = {"1","7","4","2","0","8"};
+		
+		for(int i=9;i<=100;i++) {
+			for(int j=2;j<=7;j++) {
+				String line = minDp[i-j]+add[j-2];
+				minDp[i] = Math.min(Long.parseLong(line), minDp[i]);
 			}
-			max = Integer.parseInt(String.valueOf(tmpMax));//이게 최선?
-			min = Integer.parseInt(String.valueOf(tmpMin));
-			sb.append(max+" "+min+"\n");
 		}
-		System.out.print(sb);
+		
+		String[] add2 = {"0","0","1","7","4","2","6","8"};
+		maxDp[2] = "1";
+		for(int i=3;i<=100;i++) {
+			String line = "";
+			if(i%2==0) { //짝수면
+				for(int k=0;k<i/2;k++) {
+					line += "1";
+				}
+			} else {
+				int val = i/2-1;
+				for(int k=0;k<val;k++) {
+					line += "1";
+				}
+				line = add2[i-(val*2)] +""+line;
+			}
+			maxDp[i] = line;
+		}
+		
+		for(int i=0;i<N;i++) {
+			M = Integer.parseInt(br.readLine());
+			System.out.println(minDp[M]+" "+maxDp[M]);
+		}
 	}
 
-}
+	}
