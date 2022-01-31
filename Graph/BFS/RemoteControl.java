@@ -37,7 +37,7 @@ public class RemoteControl_BFS {
 	}
 	static void bfs(int start) {
 		Queue<Pair> q = new LinkedList<>();
-		boolean[][] visited = new boolean[2][1000000];//첫 인덱스:+-/숫자를 의미
+		boolean[][] visited = new boolean[2][1000001];//첫 인덱스:+-/숫자를 의미
 		q.add(new Pair(0,start,0));//(flag,num,cnt) = (0,start,0)
 		int cnt,num,flag;
 		
