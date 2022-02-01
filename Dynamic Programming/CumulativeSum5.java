@@ -47,10 +47,6 @@ public class CumulativeSum5 {
 
 			sb.append((dp[x2][y2] - dp[x2][y1 - 1] - dp[x1 - 1][y2] + dp[x1 - 1][y1 - 1]) + "\n");
 		}
-		bw.write(sb.toString());
-
-		bw.flush();
-		bw.close();
-		br.close();
+		System.out.print(sb);
 	}
 }
