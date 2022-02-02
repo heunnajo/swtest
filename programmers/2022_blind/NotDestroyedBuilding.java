@@ -14,7 +14,7 @@ class Solution {
             dp[x1][y1] += degree;
             dp[x1][y2+1] -= degree;//오른쪽
             dp[x2+1][y1] -= degree;//아래쪽
-            dp[x2+1][y2+1] += degree;
+            dp[x2+1][y2+1] += degree;//중복해서 빼준 대각선 영역
         }
         //2.오른쪽, 아래 방향 누적합 계산
         //2-1.오른쪽
