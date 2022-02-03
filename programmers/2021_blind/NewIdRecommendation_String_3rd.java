@@ -8,7 +8,7 @@ class Solution {
         //2
         StringBuilder tmp = new StringBuilder();
         for(char c:answer.toCharArray()){
-            if(c == '-' || c == '_' || c == '.' || ('a' <= c && c <= 'z') || (c <= '0' && c<='9')){
+            if(c == '-' || c == '_' || c == '.' || ('a' <= c && c <= 'z') || ('0' <= c && c<='9')){
                 tmp.append(c);
             }
         }
@@ -31,7 +31,8 @@ class Solution {
             }
         }
         //5
-        if(answer.equals("")) answer += "a";
+        //if(answer.equals("")) answer += "a";
+        if(answer.length()==0) answer += "a";
         
         //6
         if(answer.length() >= 16) {
@@ -40,7 +41,7 @@ class Solution {
         if(answer.charAt(answer.length()-1) == '.') answer = answer.substring(0,answer.length()-1);
         //7
         char last = answer.charAt(answer.length()-1);
-        if(answer.length()<=2){
+        while(answer.length()<=2){
             answer += last;
         }
         return answer;
