@@ -1,3 +1,4 @@
+//2. K진수에서 소수 갯수 구하기
 package ss;
 import java.util.*;
 import java.io.*;
