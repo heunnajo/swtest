@@ -1,3 +1,4 @@
+//1. 신규 아이디 추천
 class Solution {
     public String solution(String new_id) {//길이 최대 1000
         String answer = new_id;
