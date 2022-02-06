@@ -1,3 +1,5 @@
+//백준 11723 비트 마스킹
+
 import java.util.*;
 import java.io.*;
 public class Main {
