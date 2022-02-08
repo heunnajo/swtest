@@ -1,7 +1,7 @@
 //4.합승 택시 요금 플로이드 와샬
 import java.util.*;
 class Solution {
-    static final int INF = 500000000;//덧셈에 있어서 overflow 방지하면서 최대한 큰값!
+    static final int INF = 199*100000+1;//덧셈에 있어서 overflow 방지하면서 최대한 큰값!
     static int[][] d = new int[205][205];
     public int solution(int V, int s, int a, int b, int[][] fares) {
         //1.변수 초기화
