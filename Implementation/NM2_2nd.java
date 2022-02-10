@@ -4,6 +4,7 @@ public class Main {
 	static boolean[] c = new boolean[10];
 	static int[] a = new int[10];
 	static void go(int index,int start,int n,int m) {
+        //1.종료 조건
 		if(index == m) {
 			for(int i=0;i<m;i++) {
 				System.out.print(a[i]);
@@ -12,6 +13,7 @@ public class Main {
 			System.out.println();
 			return;
 		}
+        //2.현재 경우 선택, 다음 경우 호출!
 		for(int i=start;i<=n;i++) {
 			if(c[i]) continue;
 			c[i] = true;a[index] = i;
