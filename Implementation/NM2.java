@@ -1,4 +1,4 @@
-//백준 15650. NM2 반복문 구현
+//백준 15650 N과 M2 > 반복문 구현
 import java.io.*;
 import java.util.*;
 public class Main {
