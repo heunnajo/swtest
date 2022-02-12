@@ -44,14 +44,15 @@ class Solution {
             //int size = q.size();
             //for(int i=0;i<size;i++){
                 Point cur = q.poll();
-                if(cur.dist == 3) break;//탐색을 종료
+                if(cur.dist == 3) break;//탐색을 종료:그냥 바로 true리턴해도 됨
             
                 for(int d=0;d<4;d++){
                     int nx = cur.x + dx[d], ny = cur.y + dy[d];
                     if(isOut(nx,ny) || visited[nx][ny] || room[nx][ny] == 'X') continue;
 
                     //거리두기 지켜지지 않는 경우 : dist<3인데 P가 나오는 경우
-                    if(room[nx][ny] == 'P') return false;
+                    //if(room[nx][ny] == 'P') return false;
+                    if(cur.dist+1<=2 && room[nx][ny] == 'P') return false;
                     
                     q.add(new Point(nx,ny,cur.dist+1));
                     visited[nx][ny] = true;
