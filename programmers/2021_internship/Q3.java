@@ -1,29 +1,18 @@
-//3. 표 편집
 import java.util.*;
 class Solution {
     class Node{
-        Node prev,next;
+        Node prev;
+        Node next;
         boolean removed;
-        // Node(){};
-        // Node(Node prev,Node next){
-        //     this.prev; this.next = next;
-        //     removed = false;
-        // }
     }
     
     public String solution(int n, int k, String[] cmd) {
         //1.자료구조 : Node cur = 현재 행, Node 타입 배열 리스트 : 표
         //현재 행 cur, 표 table, 스택 st 생성, 초기화
-        // Node cur = new Node();
-        //ArrayList<Node> table = new ArrayList[n];
+
         Node[] table = new Node[n];
         for(int i=0;i<n;i++) table[i] = new Node();
-        // for(int i=0;i<n;i++) {
-            // if(i == 0) table[i].prev = null;
-            // else table[i].prev = table[i-1];
-            // if(i == n-1) table[i].next = null;
-            // else table[i].next = table[i+1];
-        // }
+       
         for(int i=1;i<n;i++) {
             table[i].prev = table[i-1];
             table[i-1].next = table[i];
@@ -38,11 +27,13 @@ class Solution {
             char curCmd = tmp.charAt(0);
             if(curCmd == 'U'){
                 int x = tmp.charAt(2)-'0';
+                //System.out.println("x: "+x);
                 for(int j=0;j<x;j++){//문제 제한에 따라 표 범위를 벗어나는 연산은 없음.
                     cur = cur.prev;
                 }
             } else if(curCmd == 'D'){
                 int x = tmp.charAt(2)-'0';
+                //System.out.println("x: "+x);
                 for(int j=0;j<x;j++){
                     cur = cur.next;
                 }
