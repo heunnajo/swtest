@@ -40,9 +40,12 @@ class Solution {
         boolean[][] visited = new boolean[5][5];
         q.add(new Point(sx,sy,0)); visited[sx][sy] = true;
         
-        while(!q.isEmpty()){
+        //while(!q.isEmpty()){
             //int size = q.size();
-            //for(int i=0;i<size;i++){
+            
+        for(int cnt=0;cnt<2;cnt++){
+            int size = q.size();
+            for(int i=0;i<size;i++){
                 Point cur = q.poll();
                 if(cur.dist == 3) break;//탐색을 종료:그냥 바로 true리턴해도 됨
             
@@ -50,17 +53,13 @@ class Solution {
                     int nx = cur.x + dx[d], ny = cur.y + dy[d];
                     if(isOut(nx,ny) || visited[nx][ny] || room[nx][ny] == 'X') continue;
 
-                    //거리두기 지켜지지 않는 경우 : dist<3인데 P가 나오는 경우
-                    //if(room[nx][ny] == 'P') return false;
-                    if(cur.dist+1<=2 && room[nx][ny] == 'P') return false;
-                    
+                    if(room[nx][ny] == 'P') return false;
                     q.add(new Point(nx,ny,cur.dist+1));
                     visited[nx][ny] = true;
                 }
-            //}
+            }
             
         }
-        
         return true;
     }
     boolean isOut(int x,int y){
