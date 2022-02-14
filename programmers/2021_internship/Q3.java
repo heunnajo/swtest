@@ -1,15 +1,14 @@
+//3.표편집
 import java.util.*;
 class Solution {
     class Node{
-        Node prev;
-        Node next;
+        Node prev,next;
         boolean removed;
     }
-    
+    //Node[] table = new Node[1000000];
     public String solution(int n, int k, String[] cmd) {
         //1.자료구조 : Node cur = 현재 행, Node 타입 배열 리스트 : 표
         //현재 행 cur, 표 table, 스택 st 생성, 초기화
-
         Node[] table = new Node[n];
         for(int i=0;i<n;i++) table[i] = new Node();
        
@@ -26,34 +25,28 @@ class Solution {
             String tmp = cmd[i];
             char curCmd = tmp.charAt(0);
             if(curCmd == 'U'){
-                int x = tmp.charAt(2)-'0';
+                //int x = tmp.charAt(2)-'0';
+                int x = Integer.parseInt(tmp.substring(2));
                 //System.out.println("x: "+x);
                 for(int j=0;j<x;j++){//문제 제한에 따라 표 범위를 벗어나는 연산은 없음.
                     cur = cur.prev;
                 }
             } else if(curCmd == 'D'){
-                int x = tmp.charAt(2)-'0';
+                //int x = tmp.charAt(2)-'0';
+                int x = Integer.parseInt(tmp.substring(2));
                 //System.out.println("x: "+x);
                 for(int j=0;j<x;j++){
                     cur = cur.next;
                 }
             } else if(curCmd == 'C'){
                 cur.removed = true; st.push(cur);
-                // if(cur.prev != null) {cur.prev.next = cur.next;}
-                // if(cur.next != null) {
-                //     cur.next.prev = cur.prev;
-                //     cur = cur.next;//아래행을 현재행으로 갱신!
-                // }
-                Node up = cur.prev;
-                Node down = cur.next;
-                
-                if(up!=null)
-                    up.next = cur.next;
-                if(down!=null){
-                    down.prev = cur.prev;
-                    cur = cur.next;
+    
+                if(cur.prev != null) {cur.prev.next = cur.next;}
+                if(cur.next != null) {
+                    cur.next.prev = cur.prev;
+                    cur = cur.next;//아래행을 현재행으로 갱신!
                 } else cur = cur.prev;//삭제하는 행이 마지막 행인 경우!
-            } else if(curCmd == 'Z'){
+            } else {//if(curCmd == 'Z')
                 Node rD = st.pop(); rD.removed = false;
                 if(rD.prev != null) {rD.prev.next = rD;}
                 if(rD.next != null) {rD.next.prev = rD;}
