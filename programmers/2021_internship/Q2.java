@@ -35,19 +35,16 @@ class Solution {
         }
         return true;//여기까지 왔다는건 거리두기 만족한다는 의미이므로 true를 리턴!
     }
+    //bfs : 거리 단위로  탐색
     boolean bfs(int sx,int sy){
         Queue<Point> q = new LinkedList<>();
         boolean[][] visited = new boolean[5][5];
         q.add(new Point(sx,sy,0)); visited[sx][sy] = true;
         
-        //while(!q.isEmpty()){
-            //int size = q.size();
-            
-        for(int cnt=0;cnt<2;cnt++){
-            int size = q.size();
+        for(int cnt=0;cnt<2;cnt++){//cnt=거리를 의미함.
+            int size = q.size();//거리 단위로 탐색.
             for(int i=0;i<size;i++){
                 Point cur = q.poll();
-                if(cur.dist == 3) break;//탐색을 종료:그냥 바로 true리턴해도 됨
             
                 for(int d=0;d<4;d++){
                     int nx = cur.x + dx[d], ny = cur.y + dy[d];
