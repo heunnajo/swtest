@@ -1,3 +1,4 @@
+//2021카카오 인턴십  4. 미로 탈출
 import java.util.*;
 class EscapeMaze_Solution_pureCode {
     private final static int MAX_N = 1001;//1부터 인덱스 사용하기 위해
