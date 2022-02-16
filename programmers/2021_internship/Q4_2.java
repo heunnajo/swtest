@@ -56,7 +56,7 @@ class Solution {
             adj[u].add(new Point(v,val)); adjrev[v].add(new Point(u,val));
         }
         
-        //다익스트라
+        //2.다익스트라
         d[start][0] = 0;//d[node][state]
         PriorityQueue<Tuple> pq = new PriorityQueue<>();//Tuple(val,idx,state)
         //PriorityQueue<Tuple> pq = new PriorityQueue<>((a,b)->a.val-b.val);//Tuple(val,idx,state)
