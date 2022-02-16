@@ -11,10 +11,8 @@ class Solution {
         boolean[][] visited = new boolean[MAX_N][1<<10];//[node][state]
         pq.add(new int[]{src,0,0});//(node,가중치,state) 초기 함정 노드가 발동된 상태state = 0
         while(!pq.isEmpty()){
-            int[] curr = pq.poll();
-            int u = curr[0];//노드번호
-            int w = curr[1];//가중치
-            int state = curr[2];//상태
+            //u:노드번호 w:가중치 state:상태
+            int[] curr = pq.poll();int u = curr[0]; int w = curr[1]; int state = curr[2];
 
             if(u == dst) return w;
             if(visited[u][state]) continue;
