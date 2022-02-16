@@ -7,7 +7,7 @@ class Solution {
     int[][] Graph = new int[MAX_N][MAX_N];
 
     int dijkstra(int n,int src,int dst,int[] traps){//n:정점 갯수, src:출발점, dst:도착점, traps : 함정 노드들
-        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->a[1]-b[1]);//와 람다식으로 한 라인에 바로 정렬 기준 선언 가능.......미쳤....배열의 0번 값을 가중치라고 설정할 것이기 때문에 가중치인 0번 값을 기준으로 오름차순 정렬해준다! 0번:node번호, 1번:가중치, 2번:상태
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->a[1]-b[1]);
         boolean[][] visited = new boolean[MAX_N][1<<10];//[node][state]
         pq.add(new int[]{src,0,0});//(node,가중치,state) 초기 함정 노드가 발동된 상태state = 0
         while(!pq.isEmpty()){
@@ -22,37 +22,34 @@ class Solution {
             //현재 노드에서 다음 이동할 노드 확인 : 이동하려는 노드의 함정발동된 상태 확인해야함:HashMap을 이용해 빠르게 확인한다.
             boolean curTrapped = false;//초기값은 false
             HashMap<Integer,Boolean> trapped = new HashMap<>();//함정이 발동된 노드는 value=true;
-            //함정에 해당하는 비트를 먼저 만든다.
+
+            //함정 노드 순회하면서 현재 상태 state에서 몇번째 함정노드가 켜져있는지 확인, 아래 3가지 업데이트
+            //1. 현재 상태 state
+            //2. 현재 노드의 함정 발동 여부 curTrapped
+            //3. 함정 노드 저장 Map인 trapped
             for(int i=0;i<traps.length;++i){
-                int bit = 1<<i;//0:왼쪽으로 0번 시프트, 1:왼쪽으로 1번 시프트,... 그러면 함정에 해당하는 비트가 1로 켜진다! 2,3이 함정비트일 때, 이 2, 3 노드 번호와는 상관없이 인덱스이자 반복변수인 i값에 따라 비트가 켜지도록?!
-                if((state & bit)!= 0) {//0이 아니라는 건 그 비트가 켜져있다는 뜻.
-                     //현재 도착한 노드가 비트가 켜진 함정 노드라면 다시 반전시킨다(원래대로 돌아가야함) 
-                    //즉, 현재 함정 발동되있는데 다시 온것을 의미=>이 때는 해당 비트 꺼줘야함
-                    if(traps[i] ==u) {//비트를 끄는 방법은 비트 반전시킨다음 &연산하면 된다.
-                        state &= ~bit;//~bit는 해당 비트만 0이다. 따라서 현재 상태 state와 &연산하면 해당 비트만 0이 된다.
-                    } else{//아니라면 반전 시킬 필요없음
+                int bit = 1<<i;
+                if((state & bit)!= 0) {//함정 발동O 상태
+                    if(traps[i] ==u) state &= ~bit;//현재 노드가 i번째 함정노드인 경우:해당 비트 OFF
+                    else trapped.put(traps[i],true);//현재 노드가 일반 노드인 경우:Map만 업데이트
+                } else{//함정 발동X 상태
+                    if(traps[i] == u){//현재 노드가 i번째 함정노드인 경우:해당 비트 ON
+                        state |= bit;
                         trapped.put(traps[i],true);
-                    }
-                } else{//함정 발동X 상태 : 함정 발동 비트 ON 한다!
-                    if(traps[i] == u){
-                        state |= bit;//함정에 해당하는 비트 켠다!
-                        trapped.put(traps[i],true);//함정이 발동되있다는 뜻.
                         curTrapped = true;
                     }
                 }
-            }//한마디로 현재 state에 따라 ON/OFF로 토글된다! 끝나고 나면 trapped에는 함정 발동된 노드들이 들어가있을 것.
-            //인접 노드로 이동
-            for(int v = 1;v<=n;v++){
-                if(v==u) continue;
-                //이동할 때 확인해야하는 것 : 이동하고자 하는 노드가 함정 노드 발동되있는지 : HashMap을 이용
-                boolean nextTrapped = trapped.containsKey(v) ? true : false;//v로 key를 조회
-                //이로써 현재 노드의 함정 발동 여부 curTrapped, 다음 노도의 함정 발동 여부 nextTrapped
+            }
+            //인접 노드로 이동 : 현재 노드, 이동하려는 노드의 함정 발동 여부 확인(trapped Map을 이용하여 확인)
+            //현재 노드의 함정 발동 여부 curTrapped, 다음 노도의 함정 발동 여부 nextTrapped
+            for(int next = 1;next<=n;next++){
+                if(next==u) continue;
+                boolean nextTrapped = trapped.containsKey(next) ? true : false;
+                
                 if(curTrapped == nextTrapped){//둘다 함정발동O 또는 둘다 함정발동 OFF로 같으면 원래 간선 정보 사용
-                    if(Graph[u][v] != INF)
-                        pq.add(new int[]{v,w+Graph[u][v],state});
+                    if(Graph[u][next] != INF) pq.add(new int[]{next,w+Graph[u][next],state});
                 } else{//두개가 다르면 반전된 간선 정보를 이용
-                    if(Graph[v][u] != INF)
-                        pq.add(new int[]{v,w+Graph[v][u],state});
+                    if(Graph[next][u] != INF) pq.add(new int[]{next,w+Graph[next][u],state});
                 }
             }
         }
