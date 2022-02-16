@@ -14,6 +14,12 @@ class Solution {
             return -1;
         }
     }
+    // class Tuple{
+    //     int val,idx,state;
+    //     public Tuple(int val, int idx, int state){
+    //         this.val = val; this.idx = idx; this.state = state;
+    //     }
+    // }
     class Point{
         int idx,w;
         Point(int idx,int w){
@@ -53,6 +59,8 @@ class Solution {
         //다익스트라
         d[start][0] = 0;//d[node][state]
         PriorityQueue<Tuple> pq = new PriorityQueue<>();//Tuple(val,idx,state)
+        //PriorityQueue<Tuple> pq = new PriorityQueue<>((a,b)->a.val-b.val);//Tuple(val,idx,state)
+
         pq.add(new Tuple(d[start][0],start,0));
         while(!pq.isEmpty()){
             Tuple cur = pq.poll();
