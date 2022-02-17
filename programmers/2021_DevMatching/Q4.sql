@@ -1,0 +1,8 @@
+/*4.헤비 유저가 소유한 장소*/
+SELECT ID, NAME, HOST_ID
+FROM(
+    SELECT COUNT(*) AS SUM
+    FROM PLACES
+    GROUP BY HOST_ID
+    HAVING SUM >= 2
+) SQ1
