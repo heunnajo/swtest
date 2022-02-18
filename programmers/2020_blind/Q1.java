@@ -2,12 +2,10 @@
 class Solution {
     public int solution(String s) {
         int len = s.length();
-        int result = 0;
         int answer = len;//문자열 압축이 안 될 때는 s 그 자체
         for(int i=1;i<=(len/2)+1;i++){
-            result = compressStr(s,i,1).length();
-            if(i==1) answer = result;
-            else answer = Math.min(answer,result);
+            int result = compressStr(s,i,1).length();
+            answer = Math.min(answer,result);
         }
         return answer;
     }
