@@ -24,7 +24,7 @@ class Solution {
         queue.add(new pair(st, 0));
         while(!queue.isEmpty()){
             pair cur = queue.poll();
-            if(d[idx][cur.idx] != cur.weight) continue;
+            if(d[idx][cur.idx] != cur.weight) continue;//?
             for(int i = 0; i < adj[cur.idx].size(); i++){
                 pair nxt = adj[cur.idx].get(i);
                 if(d[idx][nxt.idx] > d[idx][cur.idx] + nxt.weight){
