@@ -16,7 +16,7 @@ class Solution {
             int diff = Weak[nextPos] - Weak[pos];
             
             if(nextPos < pos){
-                //diff = n + Weak[nextPos] - Weak[pos];
+                //diff = N + Weak[nextPos] - Weak[pos];
                 diff += N;
             }
             if(diff > Dist[Dist.length-cnt]){
