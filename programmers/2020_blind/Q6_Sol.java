@@ -14,7 +14,6 @@ class Solution {
         if(cnt > Dist.length) return;
         if(cnt >= MinCnt) return;//작은 값을 찾는 것이 의미있기 때문!모ㅗ든 취약점 방문 방법x필요한 최소 친구수만 찾기 때문에!
             
-            
         for(int i=0;i<Weak.length;i++){
             int nextPos = (pos + i) % Weak.length;//최초 nextPos = pos + 0 으로서, 시작위치부터 방문할 수 있다!!?
             //인덱스 초과 어떻게 핸들링할 것인가? 취약지점 갯수가 4라면 이 갯수를 넘어간다면 넘어가는 만큼 뒤로 rewind해줘야한다!=> 모듈러 연산. 내가 생각했던 부분임.
