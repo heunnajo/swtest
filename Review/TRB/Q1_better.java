@@ -1,10 +1,9 @@
-//1.문자열 
+//1.문자열 처리
 package ss;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-//1.문자열 
 import java.util.*;
 class TRB_Q1 {
 	public static void main(String[] args) throws IOException {
