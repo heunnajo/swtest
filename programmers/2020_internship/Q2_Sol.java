@@ -29,7 +29,7 @@ public class Q2_Sol {
         dfs(0,new char[3]);
         return answer;
     }
-    //2.재귀함수로 연산자 순서와 극에 맞게 계산
+    //2.재귀함수로 연산자 순서와 그에 맞게 계산
     public void dfs(int count, char[] p){
         //2-1.종료 조건:3개의 연산자 모두 처리 마친 경우!
         if(count == 3){
