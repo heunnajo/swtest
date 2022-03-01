@@ -42,12 +42,16 @@ public class InsertOperator_4th {
 			min  =  min > res ? min : res;
 			return;
 		}
-		//2.현재 선택, 다음 경우 호출
+		//2.현재 선택, 다음 경우 호출 : 선택정보를 배열에 저장, O(1)로 조회해야할까?
 		for(int i=0;i<4;i++) {
 			if(ops[i]==0) continue;
 			ops[i]--; selected.add(realOps[i]);
+			System.out.println("add 후 selected 크기: "+selected.size());//왜 값이 다르게 나오는 거야?????
+			
 			go(idx+1,selected);
-			ops[i]++; selected.remove(selected.size()-1);//원복.왜지?왜 여기서 -1? 하나 추가한 원소를 삭제하는 건데  
+			ops[i]++; 
+			System.out.println("selected 크기: "+selected.size());
+			selected.remove(selected.size()-1);//원복.왜지?왜 여기서 -1? 하나 추가한 원소를 삭제하는 건데  
 		}
 	}
 	//숫자 정보:전역변수 nums에서 복사해서 조회
