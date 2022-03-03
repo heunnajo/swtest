@@ -28,7 +28,6 @@ class Solution {
     void bfs(int dir){
         PriorityQueue<Point> q = new PriorityQueue<>();
         q.add(new Point(0,0,0,dir));
-        //v[0][0][dir] = true;//방문체크하는 타이밍 : 큐에서 뽑았을 때 함. 왜지???!!!큐에서 뽑았을 때 해야만하는 이유가 있나? 심지어 for문 내에서 다음 이동할 좌표, 방향 nx,ny,d에 대해서 하는 것이 아니라 큐에서 뽑은 현재 좌표, 현재 방향 cur.x, cur.y, cur.dir에 대해서 한다니..
         
         while(!q.isEmpty()){
             Point cur = q.poll();
@@ -45,7 +44,6 @@ class Solution {
                 //현재 이동하려고 하는 방향 d
                 
                 int nx = cur.x+dx[d], ny = cur.y+dy[d];
-                // if(isOut(nx,ny) || v[nx][ny][d]) continue;//범위를 벗어나거나 현재 방향d로 (nx,ny)방문한 적있다면 컨티뉴 처리!
                 if(isOut(nx,ny)) continue;//범위를 벗어나면 컨티뉴 처리!
                 if(Board[nx][ny] == 1) continue;//벽이면 이동 불가하므로 컨티뉴 처리!
                 
