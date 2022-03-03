@@ -50,7 +50,7 @@ class Solution {
                 //일반적인 직선도로인지, 코너를 돌아서 직선도로인지 판단!
                 if(cur.dir == d){
                     //q.add(new Point(nx,ny,cur.dist+100,cur.dir));
-                    q.add(new Point(nx,ny,cur.dist+100,d));//방향값을 넣을 때 그냥 d로 통일해주는 것이 더 괜찮은 것 같다?!
+                    q.add(new Point(nx,ny,cur.dist+100,d));
                 } else{
                     q.add(new Point(nx,ny,cur.dist+600,d));
                 }
