@@ -1,4 +1,4 @@
-//1.키패드 누르기
+//1.키패드 누르기_오답
 class Solution {
     public String solution(int[] numbers, String hand) {
         StringBuilder ans = new StringBuilder();
