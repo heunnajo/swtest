@@ -9,7 +9,7 @@ class Solution {
     int dijkstra(int n,int src,int dst,int[] traps){//n:정점 갯수, src:출발점, dst:도착점, traps : 함정 노드들
         PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->a[1]-b[1]);
         boolean[][] visited = new boolean[MAX_N][1<<10];//[node][state]
-        pq.add(new int[]{src,0,0});//(node,가중치,state) 초기 함정 노드가 발동된 상태state = 0
+        pq.add(new int[]  {src,0,0});//(node,가중치,state) 초기 함정 노드가 발동된 상태state = 0
         while(!pq.isEmpty()){
             //u:노드번호 w:가중치 state:상태
             int[] curr = pq.poll();int u = curr[0]; int w = curr[1]; int state = curr[2];
