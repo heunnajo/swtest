@@ -1,4 +1,4 @@
-//2.튜플
+//2.튜플_오답
 import java.util.*;
 class Solution {
     public int[] solution(String s) {
