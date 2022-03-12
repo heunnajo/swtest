@@ -8,7 +8,7 @@ class Solution {
         int len = record.length;
         HashMap<String,String> map = new HashMap<>();
         for(int i=0;i<len;i++){
-            String[] cur = record[i].split(" ");
+            String[] cur = record[i].split(" ");//len개의 명령어를 파싱한 결과를 어딘가에 저장하면 좋을 듯!(크기 제한이 크지 않다면!)
             if(cur[0].equals("Enter") || cur[0].equals("Change")){
                 map.put(cur[1],cur[2]);
             }
