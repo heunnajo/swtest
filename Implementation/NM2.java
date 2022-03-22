@@ -1,7 +1,7 @@
 //백준 15650 N과 M2 > 반복문 구현
 import java.io.*;
 import java.util.*;
-public class Main {
+public class NM2 {
 	static int n,m;
 	static StringBuilder sb;
 	public static void main(String[] args) throws Exception{
