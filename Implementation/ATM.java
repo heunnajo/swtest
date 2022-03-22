@@ -1,4 +1,3 @@
-package ss;
 import java.io.*;
 import java.util.*;
 
