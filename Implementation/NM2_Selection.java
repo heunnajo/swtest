@@ -1,6 +1,6 @@
 //백준 15650 N과 M2 : 선택 관점
 import java.util.*;
-public class Main {
+public class NM2_Selection {
 	static boolean[] c = new boolean[10];
 	static int[] a = new int[10];
 	static void go(int index,int start,int n,int m) {
