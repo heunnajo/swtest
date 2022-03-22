@@ -33,7 +33,7 @@ class Q5_Sol {
             //posL : meta 시작, posR : meta 끝, mid : url 시작
             int mid = 0,posL = 0,posR = 0;
             while(mid<=posL){
-                posL = s.indexOf("<meta",posL+1);
+                posL = s.indexOf("<meta",posL+1);//?
                 posR = s.indexOf(">",posL);
                 mid = s.lastIndexOf("https://",posR);
             }
