@@ -1,4 +1,5 @@
-class Solution {
+//6. n^2 배열 자르기
+class Q6 {
     public int[] solution(int n, long left, long right) {
         int[] ret = new int[(int)(right-left)+1];
         int cnt = 0;
