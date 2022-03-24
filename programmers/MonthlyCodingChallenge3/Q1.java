@@ -1,3 +1,4 @@
+//1.없는 숫자 더하기
 import java.util.*;
 class Q1 {
     public int solution(int[] numbers) {
