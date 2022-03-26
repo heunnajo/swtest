@@ -1,4 +1,4 @@
-//
+//1.로그 수집
 class Q1 {
     public int solution(String[] logs) {
         int len = logs.length;
