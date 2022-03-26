@@ -1,3 +1,4 @@
+//2. 부서진 키보드
 import java.util.*;
 class Q2 {
     public int solution(String[] sentences, int n) {
