@@ -1,6 +1,6 @@
 //1.소수 만들기
 import java.util.*;
-class Solution {
+class Q1 {
     int[] Nums;
     int N,ans;
     boolean[] v;
