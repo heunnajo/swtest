@@ -4,7 +4,7 @@ import java.lang.*;
 import java.io.*;
 import java.util.regex.Pattern;
 
-public class Main {
+public class CheckSubmarine {
     
 	public static void main (String[] args) throws java.lang.Exception {
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
