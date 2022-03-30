@@ -21,7 +21,7 @@ int N;
 int need[NM][30];//각 문자열마다 필요한 카드를 먼저 확인해야함!:필요하면 1, 아니면 0
 int score[NM];
 string str;
-regex re("^team_name : [a-zA-Z]+ application_name : [a-zA-Z]+ error_level : [a-zA-Z]+ message : [a-zA-z]+$");
+
 void Input(){
     cin >> N >> K;
     cin.ignore();//공백도 있기 때문에 getline을 써줘야함
