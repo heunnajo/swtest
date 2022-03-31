@@ -8,13 +8,13 @@ import java.util.StringTokenizer;
 
 public class CarRepairShop_Solution {
 	static class Customer{
-		int customerNo;
-		int receptionNo;
-		int repairNo;
-		int arriveTime;
-		int receptionStartTime;
-		int receptionEndTime;
-		int repairStartTime;
+		int customerNo;//1.고객 번호
+		int receptionNo;//2.접수 창구 번호
+		int repairNo;//3.정비 창구 번호
+		int arriveTime;///4.도착 시간
+		int receptionStartTime;//5.접수 시작 시간
+		int receptionEndTime;//6.접수 종료 시간
+		int repairStartTime;//7.정비 시작 시간 (정비 종료 시간은 불필요)
 		
 		Customer(int customerNo, int arriveTime){
 			this.customerNo = customerNo;
@@ -22,9 +22,9 @@ public class CarRepairShop_Solution {
 		}
 	}
 	static PriorityQueue<Customer> receptionQueue,repairQueue;
-	static Customer[] receptionCounter,repairCounter;
-	static int[] reception, repair;
-	static int N,M,K,A,B,T,ans;
+	static Customer[] receptionCounter,repairCounter;//O
+	static int[] reception, repair;//입력
+	static int N,M,K,A,B,T,ans;//입력
 	
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -84,9 +84,9 @@ public class CarRepairShop_Solution {
 					if(receptionCounter[i]==null)continue;//i번창구에 사람없으면 넘어간다.
 					Customer c = receptionCounter[i];//i번 접수창구의 고객 조회.
 					
-					if(c.receptionStartTime+reception[i]<=time) {//접수완료 시간<=현재시간 비교
+					if(c.receptionStartTime+reception[i]<=time) {//접수완료 시간<=현재시간 비교 : 부등호!
 						c.receptionEndTime = time;
-						repairQueue.offer(c);
+						repairQueue.offer(c);//O
 						receptionCounter[i] = null;
 					}
 				}
@@ -94,7 +94,7 @@ public class CarRepairShop_Solution {
 				for(int i=1;i<=N;i++) {//1번 접수창구부터 차례대로 고객 배정.
 					if(receptionCounter[i] == null) {//i번 창구 비었으면 고객 1명씩 배정한다.
 						if(!receptionQueue.isEmpty()) {
-							if(receptionQueue.peek().arriveTime<=time) {
+							if(receptionQueue.peek().arriveTime<=time) {//?
 								receptionCounter[i] = receptionQueue.poll();//receptionQueue에 있는 사람(번호 작은 순) i번 창구에 할당.
 								receptionCounter[i].receptionNo = i;
 								receptionCounter[i].receptionStartTime = time;
