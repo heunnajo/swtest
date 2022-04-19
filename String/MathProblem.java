@@ -1,47 +1,44 @@
 //BOJ #2870 수학문제
-package ss;
 import java.io.*;
 import java.util.*;
-public class MathProblem {
+import java.math.BigInteger;
+
+public class Main {
 
 	public static void main(String[] args) throws Exception{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		int N = Integer.parseInt(br.readLine());
 		
-		LinkedList<Integer> ans = new LinkedList<>();
+		LinkedList<BigInteger> nums = new LinkedList<>();
 		
-		//N개의 입력 받으면서 처리, 정답 자료구조에 저장!
 		while(N-- >0) {
 			String input = br.readLine();
 			int len = input.length();
-			String tmpNum = "";
+			StringBuilder tmpNum = new StringBuilder();
 			
 			for(int i=0;i<len;i++) {
 				if(!Character.isLowerCase(input.charAt(i))) {
-					tmpNum += input.charAt(i);
+					tmpNum.append(input.charAt(i));
 				} else {
-					if(!tmpNum.equals("")) {
-						int num = Integer.parseInt(tmpNum);
-						//System.out.println("형변환 후 num: "+num);
-						ans.add(num);
-						tmpNum = "";
+					if(tmpNum.length()>0) {
+						BigInteger cur = new BigInteger(tmpNum.toString());
+						nums.add(cur);
+						tmpNum = new StringBuilder();
 					}
 				}
 			}
-			if(!tmpNum.equals("")) {
-				int num = Integer.parseInt(tmpNum);
-				//System.out.println("형변환 후 num: "+num);
-				ans.add(num);
-				tmpNum = "";
+			if(tmpNum.length()>0) {
+				BigInteger cur = new BigInteger(tmpNum.toString());
+				nums.add(cur);
 			}
 		}
-		Collections.sort(ans);//내림차순으로 정렬하면 어떻게 되는가?해보기
-		StringBuilder sb = new StringBuilder();
+		Collections.sort(nums);
+		StringBuilder ans = new StringBuilder();
 		
-		for(int a:ans) {
-			sb.append(a+"\n");
+		for(BigInteger a:nums) {
+			ans.append(a+"\n");
 		}
-		System.out.print(sb);
+		System.out.print(ans);
 	}
 
 }
