@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class DoyoungMadeDeliciousFood {
-	static int[] S,B;//S:신맛*, B:쓴맛+
+	static int[] S,B;
 	static int N,ans;
 	public static void main(String[] args) throws NumberFormatException, IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -25,7 +25,7 @@ public class DoyoungMadeDeliciousFood {
         	System.out.println(Math.abs(S[0]-B[0]));
         	System.exit(0);
         }
-        ans = 1000000000;//어떤 요리의 신맛/쓴맛 최댓값은 10억 
+        ans = 1000000001;
         go(0,1,0);
         System.out.println(ans);
 	}
