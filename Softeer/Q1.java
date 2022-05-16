@@ -55,6 +55,7 @@ public class Main {
 			if(ans>sum) ans = sum;
 			return;
 		}
+        //int curSum = order[from%N];from++;
 		int curSum = 0;
 		while(curSum+order[from%N] <= M) {
 			curSum += order[from%N];
