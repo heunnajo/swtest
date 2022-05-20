@@ -1,4 +1,4 @@
-//회의실 배정
+//회의실 배정(오답)
 import java.util.*;
 import java.io.*;
 public class MeetingroomReservation {
