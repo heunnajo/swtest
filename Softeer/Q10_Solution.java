@@ -19,7 +19,7 @@ public class Main {
 
         Map<String, int[][]> reservation = new TreeMap<>();
         for (int i = 0; i < N; i++) {
-            int[][] temp = new int[9][2];
+            int[][] temp = new int[9][2];//9개의 시간대마다 시작 시간과  종료 시간을  기록
             for (int j = 0; j < 9; j++) {
                 temp[j][0] = j;
                 temp[j][1] = j + 1;
