@@ -33,8 +33,8 @@ public class BOJ1059_Sol {
 		}
 		if(start == -1) start = 1;
 		if(end == -1) end = 1000;
-		
-		int ans = (n-start) * (end-n) -1;
+		int ans = left == 0? 1*right-1 : left*right-1;
+		//int ans = (n-start) * (end-n) -1;
 		System.out.println(ans);
 	}
 
