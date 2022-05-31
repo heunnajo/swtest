@@ -1,8 +1,7 @@
 //좋은 구간
-package ss;
 import java.io.*;
 import java.util.*;
-public class BOJ1059_Sol {
+public class Main {
 
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -21,6 +20,10 @@ public class BOJ1059_Sol {
 		
 		int start = -1, end = -1;
 		for(int i=0;i<l;i++) {
+			if(arr[0] > n) {
+				end = arr[0];
+				break;
+			}
 			if(arr[i]<n) start = arr[i];
 			else if(arr[i]>n) {
 				end = arr[i];
@@ -31,10 +34,10 @@ public class BOJ1059_Sol {
 			}
 			if(start != -1 && end != -1) break;
 		}
-		if(start == -1) start = 1;
+		if(start == -1) start = 0;
 		if(end == -1) end = 1000;
-		int ans = left == 0? 1*right-1 : left*right-1;
-		//int ans = (n-start) * (end-n) -1;
+		
+		int ans = (n-start) * (end-n) -1;
 		System.out.println(ans);
 	}
 
