@@ -7,9 +7,9 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class BOJ1520 {
-	static int m,n,ans,map[][];//m : 행,n : 열 
+	static int m,n,ans,map[][],dp[][];
 	static class Pair{
-		int x,y;//default access modifier : within same class, same package only
+		int x,y;
 		
 		Pair(int x,int y){
 			this.x = x;
@@ -28,6 +28,9 @@ public class BOJ1520 {
 		n = Integer.parseInt(st.nextToken());
 		
 		map = new int[m][n];
+		dp = new int[m][n];
+		
+		for(int i=0;i<m;i++) Arrays.fill(dp[i], -1);
 		
 		for(int i=0;i<m;i++) {
 			st = new StringTokenizer(br.readLine());
@@ -35,33 +38,23 @@ public class BOJ1520 {
 				map[i][j] = Integer.parseInt(st.nextToken());
 			}
 		}
-		ans = 0;
-		bfs();//map을 bfs하는 함수
-		System.out.println(ans);
+		System.out.println(dfs(0,0));
 	}
-	static void bfs() {
-		Queue<Pair> q = new LinkedList<>();
-		boolean[][] v = new boolean[m][n];
-		q.add(new Pair(0,0));
-		v[0][0] = true;
+	static int dfs(int x,int y) {
+		if(x == m-1 && y == n-1) return 1;
 		
-		while(!q.isEmpty()) {
-			Pair cur = q.poll();
-			if(cur.x == m-1 && cur.y == n-1) ans++;
+		if(dp[x][y] != -1) {
+			return dp[x][y];
+		}
+		dp[x][y] = 0;
+		for(int d=0;d<4;d++) {
+			int nx = x+dx[d], ny = y+dy[d];
 			
-			for(int d=0;d<4;d++) {
-				int nx = cur.x+dx[d];
-				int ny = cur.y+dy[d];
-				
-				if(isOut(nx,ny) || v[nx][ny]) continue;
-				//이동 가능 조건 : 현재칸의 값보다 더 작을 때만 이동 가능!(현재칸보다 크거나 같으면 컨티뉴)
-				if(map[nx][ny] >= map[cur.x][cur.y]) continue;
-				
-				q.add(new Pair(nx,ny));
-				v[nx][ny] = true;
-			}
+			if(isOut(nx,ny) || map[nx][ny] >= map[x][y]) continue;
+			dp[x][y] += dfs(nx,ny);
 		}
 		
+		return dp[x][y];
 	}
 	static boolean isOut(int x,int y) {
 		return x<0 || x>=m || y<0 || y>=n;
