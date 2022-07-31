@@ -1,4 +1,4 @@
-//트리의 부모 찾기
+//트리의 부모 찾기 Memory : 39960KB, Time : 388ms 더 빠른 이유는 SuppressWarnings?
 import	java.io.*;
 import	java.util.*;
 
