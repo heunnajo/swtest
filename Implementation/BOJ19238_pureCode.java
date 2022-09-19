@@ -1,7 +1,7 @@
 package ss;
 import java.util.*;
 import java.io.*;
-
+//스타트 택시
 public class BOJ19238_pureCode {
 	static int N,M,fuel,sx,sy;//택시 위치(sx,sy)
 	static int[][] Map;
