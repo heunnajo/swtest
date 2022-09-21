@@ -3,7 +3,7 @@ import java.io.*;
 import java.util.*;
 
 //해킹
-public class BOJ10282 {
+public class BOJ10282_Solution {
 	static int n,d,c,a,b,s;
 	static int count,time;
 	static ArrayList<Node>[] adj;
