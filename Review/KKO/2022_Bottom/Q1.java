@@ -28,6 +28,9 @@ class Solution {
             String strMonth = fullDate.substring(5,7);
             String strDate = fullDate.substring(8);
 
+            String strFullDate = strYear + strMonth + strDate;
+            if(Integer.parseInt(strFullDate) >= todayDate) continue;
+
             int year = Integer.parseInt(strYear);
             int month = Integer.parseInt(strMonth);
             int date = Integer.parseInt(strDate);
@@ -54,10 +57,13 @@ class Solution {
             String tmp = sb.toString();
             int expiredDate = Integer.parseInt(tmp);
 
+            //if(todayDate == 20221228){
             //System.out.println("오늘 일자: "+todayDate);
             //System.out.println("만료 일자: "+expiredDate);
-
-            if(todayDate >= expiredDate) {//만료일보다 오늘날짜가 그 이상이라면
+            //}
+            
+            //20221228 >= 20211102 로 조건
+            if(todayDate >= expiredDate) {//만료일이 오늘 일자 이상일 때 : 이미 만료일이 지난 경우!
                 ans.add(i+1);
             }
         }
