@@ -53,9 +53,13 @@ class Solution {
 
             String tmp = sb.toString();
             int expiredDate = Integer.parseInt(tmp);
-            //System.out.println("만료 기간: "+expiredDate);
 
-            if(expiredDate > todayDate) ans.add(i+1);
+            //System.out.println("오늘 일자: "+todayDate);
+            //System.out.println("만료 일자: "+expiredDate);
+
+            if(todayDate >= expiredDate) {//만료일보다 오늘날짜가 그 이상이라면
+                ans.add(i+1);
+            }
         }
 
         int size = ans.size();
