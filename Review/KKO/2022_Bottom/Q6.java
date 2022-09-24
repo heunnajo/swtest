@@ -5,7 +5,7 @@ class Solution {
     static int sx,sy,ex,ey;
     static int K;
     static HashSet<String> set;
-    static int[] dx = {1,0,0,-1};
+    static int[] dx = {1,0,0,-1};//하좌우상
     static int[] dy = {0,-1,1,0};
 
     static class Pos{
