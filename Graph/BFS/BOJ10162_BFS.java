@@ -1,8 +1,9 @@
-package boj;
+package BFS;
+
 import java.util.*;
 import java.io.*;
 //전자레인지
-public class BOJ10162 {
+public class BOJ10162_BFS {
 	static int t,ans[];
 	static int[] dir = {300,60,10};
 	
