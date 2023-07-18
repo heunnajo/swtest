@@ -19,13 +19,10 @@ public class BOJ3986 {
 			st = new Stack<>();
 			
 			for(int i=0;i<len;i++) {
-				if(!st.isEmpty() && st.peek() != word.charAt(i)) {
-					st.push(word.charAt(i));
-				} else if(!st.isEmpty() && st.peek() == word.charAt(i)){
-					st.pop();
-				} else {
-					st.push(word.charAt(i));
-				}
+				if(!st.isEmpty()) {
+					if(st.peek() != word.charAt(i)) {st.push(word.charAt(i));}
+					else {st.pop();}
+				} else{st.push(word.charAt(i));}
 			}
 			
 			if(st.isEmpty()) cnt++;
