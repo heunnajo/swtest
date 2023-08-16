@@ -1,4 +1,4 @@
-package swea;
+package BFS;
 import java.util.*;
 import java.io.*;
 //치즈
