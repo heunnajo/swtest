@@ -1,7 +1,7 @@
 package swea;
 import java.io.*;
 import java.util.*;
-//유닛 이동시키기 :debugging
+//유닛 이동시키기
 public class BOJ2194 {
 	static int sx,sy,ex,ey;
 	static int N,M,A,B,K,Ans;
@@ -73,7 +73,7 @@ public class BOJ2194 {
 		}
 	}
 	static boolean isOut(int x,int y) {
-		return x<0 || x>N-1 || y<0 || y>N-1 || (y+B-1)>M-1 || (x+A-1)>N-1;
+		return x<0 || x>N-1 || y<0 || y>M-1 || (y+B-1)>M-1 || (x+A-1)>N-1;
 	}
 	static boolean isBlocked(int x,int y) {
 		for(int i=x;i<x+A;i++) {
