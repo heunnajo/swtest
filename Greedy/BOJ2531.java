@@ -1,11 +1,9 @@
-package swea;
 import java.util.*;
 import java.io.*;
-//회전 초밥 :debugging
+//회전 초밥
 public class BOJ2531 {
 	static int N,d,k,c;
-	static HashMap<Integer,Integer> map;
-	static int[] Sushi;
+	static int[] Sushi,Eated;
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer st = new StringTokenizer(br.readLine());
@@ -14,36 +12,29 @@ public class BOJ2531 {
 		k = Integer.parseInt(st.nextToken());
 		c = Integer.parseInt(st.nextToken());
 		Sushi = new int[N];
+		Eated = new int[d+1];
 		
+		int max = 0;
 		for(int i=0;i<N;i++) {
 			Sushi[i] = Integer.parseInt(br.readLine());
+			if(i<k) {
+				if(Eated[Sushi[i]] == 0) {max++;}//종류 수 카운팅!
+				Eated[Sushi[i]]++;
+			}
 		}
 		
-		int tmpSum;
-		int sum = 0;
+		int count = max;
 		for(int i=0;i<N;i++) {
-			map = new HashMap<>();
-			tmpSum = 0;
-//			int end = i+k;
-//			if(end>N) end = (i+k)%N;
-//			for(int j=i; j < end ;j++) {
-//				map.put(Sushi[j], 1);
-//			}
-			int stIdx = i; int endIdx = i+k;
-			for(int j=stIdx;j<endIdx;j++) {
-				if(j>=N) {j = j%N;}
-				map.put(Sushi[j], 1);
+			if(max <= count) {
+				if(Eated[c] == 0) max = count+1;
+				else max = count;
 			}
-			tmpSum = map.size();
-			if(!map.containsKey(c)) {
-				tmpSum += 1;
-			}
-			if(sum < tmpSum) {
-				//System.out.println("갱신된 시작 인덱i: "+i);
-				sum = tmpSum;
-			}
+			int end = (i+k)%N;
+			if(Eated[Sushi[end]]++ == 0) count++;
+			if(--Eated[Sushi[i]]==0) count--;
+			
 		}
-		System.out.println(sum);
+		System.out.println(max);
 
 	}
 
