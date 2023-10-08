@@ -1,81 +1,99 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-//톱바퀴
+//톱니바퀴
+import java.util.*;
+import java.io.*;
+
 public class BOJ14891 {
-	static int[][] wheel = new int[4][8];
-	static int[] isValid;
-	public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        for(int i=0;i<4;i++) {
-        	String[] input = br.readLine().split("");
-        	for(int j=0;j<8;j++) {
-        		wheel[i][j] = Integer.parseInt(input[j]);
-        	}
-        }
-        
-        int round = Integer.parseInt(br.readLine());
-        
-        for(int i=0;i<round;i++) {
-        	String[] input = br.readLine().split(" ");
-        	isValid = new int[4];
-        	
-        	int wheelNum = Integer.parseInt(input[0])-1;
-        	int dir = Integer.parseInt(input[1]);
-        	
-        	check(wheelNum,dir);
-        	rotate(isValid);
-        }
-        System.out.println(calc());
+	static int[][] Wheel;
+	static int[] isRotated;
+	public static void main(String[] args) throws Exception{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		Wheel = new int[4][8];
+		String[] input;
+		
+		for(int i=0;i<4;i++) {
+			input = br.readLine().split("");
+			for(int j=0;j<8;j++) {
+				Wheel[i][j] = Integer.parseInt(input[j]);
+			}
+		}
+		
+		int cnt = Integer.parseInt(br.readLine());
+		int idx,dir;
+		
+		for(int i=0;i<cnt;i++) {
+			input = br.readLine().split(" ");
+			isRotated = new int[4];
+			idx = Integer.parseInt(input[0])-1;
+			dir = Integer.parseInt(input[1]);
+			check(idx,dir);
+			rotate();
+		}
+		
+		System.out.println(calculated());
+		
 	}
-	static int calc() {
+	static void print() {
+		System.out.print("isRotated: ");
+		for(int i=0;i<4;i++) {
+			System.out.print(isRotated[i]+" ");
+		}
+		System.out.println();
+		
+	}
+	static void printWheel() {
+		for(int i=0;i<4;i++) {
+			for(int j=0;j<8;j++) {
+				System.out.print(Wheel[i][j]);
+			}
+			System.out.println();
+		}
+		System.out.println();
+	}
+	static int calculated() {
 		int sum = 0;
-		for(int i=0;i<4;i++) {
-			int num = wheel[i][0];
-			
-			if(num == 1) {
-				sum += Math.pow(2, i);
-			}
-		}
+		
+		if(Wheel[0][0] == 1) sum += 1;
+		if(Wheel[1][0] == 1) sum += 2;
+		if(Wheel[2][0] == 1) sum += 4;
+		if(Wheel[3][0] == 1) sum += 8;
+		
 		return sum;
-	}
-	static void check(int wheelNum,int dir) {
-		isValid[wheelNum] = dir;
+	} 
+	static void check(int idx,int dir) {
+		isRotated[idx] = dir;
 		
-		int prev = wheelNum - 1;
-		int next = wheelNum + 1;
-		
-		if(prev>=0 && isValid[prev] == 0) {
-			if(wheel[prev][2] != wheel[wheelNum][6]) {
-				check(prev,dir * -1);
+		if(idx-1>=0 && isRotated[idx-1] == 0) {
+			if(Wheel[idx-1][2] != Wheel[idx][6]) {
+				check(idx-1,dir * -1);
 			}
 		}
-		if(next<=3 && isValid[next] == 0) {
-			if(wheel[next][6] != wheel[wheelNum][2]) {
-				check(next,dir*-1);
+		
+		if(idx+1<=3 && isRotated[idx+1] == 0) {
+			if(Wheel[idx][2] != Wheel[idx+1][6]) {
+				check(idx+1,dir * -1);
 			}
 		}
 	}
-	static void rotate(int[] isValid) {
+	static void rotate() {
 		for(int i=0;i<4;i++) {
-			if(isValid[i] != 0) {
-				int[] temp = new int[8];
-				
-				int idx;
-				for(int j=0;j<8;j++) {
-					idx = j+isValid[i];
-					
-					if(idx == -1) {
-						idx = 7;
-					} else if(idx == 8) {
-						idx = 0;
-					}
-					temp[idx] = wheel[i][j];
+			if(isRotated[i] == -1) {
+				int tmp = Wheel[i][0];
+				for(int j=0;j<7;j++){
+					Wheel[i][j] = Wheel[i][j+1];
 				}
-				wheel[i] = temp;
+				Wheel[i][7] = tmp;
+			} else if(isRotated[i] == 1) {
+				int tmp = Wheel[i][7];
+				for(int j=7;j>0;j--){
+					Wheel[i][j] = Wheel[i][j-1];
+				}
+				Wheel[i][0] = tmp;
 			}
 		}
 	}
-
 }
+
+//		
+//		for(int i=0;i<cnt;i++) {
+//			System.out.println(opInfo[i][0]+" "+opInfo[i][1]);
+//		}
