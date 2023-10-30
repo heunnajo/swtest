@@ -1,6 +1,6 @@
 package cdTest;
 import java.util.*;
-//디스크 컨트롤러
+//디스크 컨트롤러 : debugging...
 public class Q14743 {
 	int Ans;
 	class Pair implements Comparable<Pair>{
