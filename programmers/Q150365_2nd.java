@@ -38,10 +38,8 @@ class Solution {
             if(stop)return;
             int nx = x + dx[k];
             int ny = y + dy[k];
-            if(nx < 0 || ny < 0 || nx > n-1 
-               || ny > m-1 || !canArrival(nx,ny,cnt) )continue;
-            if(cnt > 0)
-                helper(nx, ny, cnt-1, cur+posChar[k]);
+            if(nx < 0 || ny < 0 || nx > n-1 || ny > m-1 || !canArrival(nx,ny,cnt) )continue;
+            if(cnt > 0) helper(nx, ny, cnt-1, cur+posChar[k]);
             //System.out.println("현재 문자"+cur+"위치"+nx+","+ny+"cnt:"+cnt+"목표"+ex+",");
             if(nx == ex && ny == ey && cnt ==0){
                 stop = true;
