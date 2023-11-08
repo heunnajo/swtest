@@ -1,55 +1,56 @@
 //Q150365 미로 탈출 명령어
-import java.util.*;
-import java.lang.*;
 class Solution {
-    int[][] array;
-    String answer = null;
-    StringBuilder route;
-    char[] dir = {'d', 'l', 'r', 'u'};
-    int[] rdir = {1, 0, 0, -1};
-    int[] cdir = {0, -1, 1, 0};
-    int endRow, endCol;
-    int arrRow, arrCol; //미로 길이
+    int N,M,K,Sx,Sy,Ex,Ey;
+    int[] dx = {1,0,0,-1};
+    int[] dy = {0,-1,1,0};
+    char[] dirChar = {'d','l','r','u'};
+    int[] dirInfo;
+    String Ans;
     public String solution(int n, int m, int x, int y, int r, int c, int k) {
-        route = new StringBuilder();
-        array = new int[n][m];
-        endRow = r; endCol = c;
-        arrRow = n; arrCol = m;
-        //최단거리 계산 - 거리 k로 갈 수 있는지 여부
-        int length = distance(x, y, r, c);
-        if((k - length) % 2 == 1 || k < length) return "impossible";
-        dfs(x, y, 0, k);
         
-        return answer == null ? "impossible" : answer;
-    }
-
-    private int distance(int x, int y, int r, int c){
-        return (int)Math.abs(x-r) + (int)Math.abs(y-c);
-    }
-
-    private void dfs(int r, int c, int depth, int k){
+        N = n; M = m; Sx = x-1; Sy = y-1; Ex = r-1; Ey = c-1; K = k;
+        if(K < getD(Sx,Sy,Ex,Ey)) return "impossible";
+        if((K - getD(Sx,Sy,Ex,Ey)) % 2 != 0) return "impossible";
         
-        if(answer != null) return;
-        if(depth + distance(r, c, endRow, endCol) > k) return; //현재 깊이 + 남은 거리 > k
-        if(k == depth) {
-            answer = route.toString();
+        Ans = "";
+        dirInfo = new int[K];
+        dfs(Sx,Sy,0);
+        
+        return Ans;
+    }
+    int getD(int sx,int sy,int ex,int ey){
+        return (int)Math.abs(sx-ex) + (int)Math.abs(sy-ey);
+    }
+    void dfs(int x,int y,int depth){
+        //0.backtracing
+        if(!Ans.equals("")) return;
+        //현재 깊이에서 도착점까지 남은거리값 계산, 백트랙킹 
+        if(depth + getD(x, y, Ex, Ey) > K) return;
+
+        //1.base case
+        if(depth == K){
+            //System.out.print("여긴 들어오니?");
+            if(x == Ex && y == Ey){
+                StringBuilder sb = new StringBuilder(K);
+                for(int i=0;i<K;i++){
+                    sb.append(dirChar[dirInfo[i]]);
+                }
+                Ans = sb.toString();
+                //System.out.print(Ans);
+            }
             return;
         }
-        for(int i=0; i<4; i++){
-            
-            int nextRow = r + rdir[i];
-            int nextCol = c + cdir[i];
-            if(nextRow <= arrRow && nextCol <= arrCol && nextRow > 0 && nextCol >0){
-                route.append(dir[i]);
-                dfs(nextRow, nextCol, depth+1, k);
-                route.delete(depth, depth+1);
-            }
-            
+        //2.current depth , next depth
+        //System.out.println("현재 좌표: "+x+","+y);
+        for(int d=0;d<4;d++){
+            int nx = x+dx[d]; int ny = y+dy[d];
+            if(isOut(nx,ny) || !Ans.equals("")) continue;
+            dirInfo[depth] = d;
+            dfs(nx,ny,depth+1);
+            dirInfo[depth] = -1;
         }
-
     }
-
-
-
-
+    boolean isOut(int x,int y){
+        return x<0 || x>=N || y<0 || y>=M;
+    }
 }
