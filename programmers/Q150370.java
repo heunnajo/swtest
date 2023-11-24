@@ -1,4 +1,4 @@
-//Q150370 개인정보 수집 유효기간
+//Q150370 개인정보 수집 유효기간 : debugging...
 import java.util.*;
 class Solution {
     public int[] solution(String today, String[] terms, String[] privacies) {
