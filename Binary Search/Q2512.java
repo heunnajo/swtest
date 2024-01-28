@@ -38,6 +38,7 @@ public class Q2512 {
 				maxSum = sum;
 				k = mid;
 			}
+			
 //			System.out.println("sum: "+sum);
 			
 			//min, max 조정
